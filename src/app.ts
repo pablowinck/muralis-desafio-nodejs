@@ -2,6 +2,9 @@ import express, { Express, Request, Response } from "express";
 import morgan from "morgan";
 import logger from "./core/config/logger";
 import { PostgreSQLConnector } from "./core/connectors/PostgreSQLConnector";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app: Express = express();
 const port = process.env.PORT || 3000;
