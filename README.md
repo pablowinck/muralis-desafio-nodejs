@@ -46,3 +46,4 @@ O atributo **success** será **true** caso a **request** seja executada com suce
   - O usuário informar somente o CEP e o número do estabelecimento, os demais dados devem ser adquiridos através de um mecanismo externo, como o viacep.com.br, por exemplo.
 
 ### Modelo de dados:
+![image](https://user-images.githubusercontent.com/70986781/211171802-5afab156-1ec1-4793-ab8f-92438071805e.png)
