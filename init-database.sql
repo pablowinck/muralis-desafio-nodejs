@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS TipoPagamento
 (
     id   SERIAL PRIMARY KEY,
-    tipo VARCHAR(255) NOT NULL
+    tipo VARCHAR(255) NOT NULL UNIQUE
 );
 
 CREATE TABLE IF NOT EXISTS Categoria
@@ -29,3 +29,10 @@ CREATE TABLE IF NOT EXISTS Despesa
     FOREIGN KEY (idTipoPagamento) REFERENCES TipoPagamento (id),
     FOREIGN KEY (idCategoria) REFERENCES Categoria (id)
 );
+
+INSERT INTO TipoPagamento (tipo)
+VALUES ('Dinheiro'),
+       ('Débito'),
+       ('Crédito'),
+       ('Pix')
+ON CONFLICT DO NOTHING;
