@@ -4,7 +4,7 @@
   "description": "Desafio Tecnico da Muralis",
   "main": "dist/app.js",
   "scripts": {
-    "start": "node dist/app.js",
+    "start": "node dist/app.js | pino-pretty",
     "dev": "nodemon src/app.ts | pino-pretty",
     "build": "npx tsc"
   },
