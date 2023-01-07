@@ -1,10 +1,10 @@
 # Etapa Técnica - Muralis
-
+#### obs: Avaliador, favor verificar erratas do desafio no final do README.md.
 ### URL da aplicação
 - https://muralis-desafio-react.vercel.app/
 - Utilizar a collection do Postman para testar a API: https://www.getpostman.com/collections/1b0b0c1b0c1b0c1b0c1b
 
-#### obs: Avaliador, favor verificar erratas do desafio no final do README.md.
+
 
 ### Problema
 
