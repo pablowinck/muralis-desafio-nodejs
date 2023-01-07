@@ -8,11 +8,7 @@ export class PostgreSQLConnector implements DatabaseConnector {
 
   constructor(readonly config: DatabaseConfig) {
     this.client = new Pool({
-      host: this.config.host,
-      port: this.config.port,
-      user: this.config.user,
-      password: this.config.password,
-      database: this.config.database,
+      connectionString: config.connectionString,
     });
     this.client.on("error", (err) => {
       logger.info("Unexpected error on idle client", err);
