@@ -19,7 +19,7 @@ Controlar os gastos de acordo com a renda disponível é fator fundamental para 
 - Mantenha uma separação adequada de responsabilidades;
 - Utilize conceitos de Programação Orientada a Objetos quando achar pertinente;
 
-### Endpoints principais necessários
+### Endpoints
 | Método | Endpoint      | Descrição         |
 |--------|---------------|-------------------|
 | GET    | /api/despesas | Listar despesas   |
@@ -37,7 +37,7 @@ Para a função "Listar" deve conter a lista de despesas cadastradas no banco de
 
 O atributo **success** será **true** caso a **request** seja executada com sucesso, caso contrário será **false**.
 
-### Demais demandas
+### Demandas
 - Implementar os verbos http: POST, GET, PUT, DELETE, e PATCH;
 - Retornar um **PDF** contendo as despesas, respeitando um intervalo de tempo;
 - Retornar uma **lista** de despesas, respeitando a paginação;
@@ -47,3 +47,11 @@ O atributo **success** será **true** caso a **request** seja executada com suce
 
 ### Modelo de dados:
 ![image](https://user-images.githubusercontent.com/70986781/211171802-5afab156-1ec1-4793-ab8f-92438071805e.png)
+
+
+### Erratas
+- O usuário deve informar somente o CEP e o número do estabelecimento. Pois há casos dois casos que aconteceria problemas críticos:
+  - O CEP não retorna o endereço completo, como por exemplo o CEP 95800-000. Nesse caso, o usuário deverá informar o endereço completo.
+  - Há casos que não se tem número no estabelecimento, nestes casos deveria poder preencher o campo complemento.
+- Endpoints não batem com demandas, pois além dos verbos, não há os endpoints de geração de PDF e Excel.
+- Modelo de dados não bate com demandas, pois nao ha endereço
