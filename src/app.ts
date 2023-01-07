@@ -5,7 +5,7 @@ import logger from "./core/config/logger";
 
 dotenv.config();
 const app: Express = express();
-const port = process.env.PORT;
+const port = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
