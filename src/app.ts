@@ -12,9 +12,9 @@ app.use(
   morgan(":method :url :status :res[content-length] - :response-time ms")
 );
 
-new PostgreSQLConnector({
+const client = new PostgreSQLConnector({
   connectionString: process.env.DATABASE_URL || "",
-}).connect();
+}).getClient();
 
 app.get("/", (req: Request, res: Response) => {
   res.send(JSON.stringify({ message: "Hello World!" }));
