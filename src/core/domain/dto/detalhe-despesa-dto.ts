@@ -2,7 +2,8 @@ import { Categoria } from "@entity/Categoria";
 import { TipoPagamento } from "@entity/TipoPagamento";
 import { ValorMapper } from "@mapper/valor-mapper";
 import { DateMapper } from "@mapper/date-mapper";
-import { ResponseDespesaDetalhada } from "@responses/response-despesa-detalhada";
+import { ResponseDespesaDetalhadaDto } from "@dto/response-despesa-detalhada-dto";
+import logger from "@core/config/logger";
 
 export class DetalheDespesaDto {
   id: number;
@@ -12,14 +13,16 @@ export class DetalheDespesaDto {
   bairro: string;
   cidade: string;
   estado: string;
-  CEP: string;
+  cep: string;
+  numero: string;
   logradouro: string;
   categoria: Categoria;
   tipoPagamento: TipoPagamento;
 
   static from(
-    responseDespesaByMes: ResponseDespesaDetalhada
+    responseDespesaByMes: ResponseDespesaDetalhadaDto
   ): DetalheDespesaDto {
+    logger.info("numero: " + responseDespesaByMes.numero);
     const id = responseDespesaByMes.iddespesa;
     const valor = ValorMapper.format(+responseDespesaByMes.valor);
     const data = DateMapper.format(responseDespesaByMes.datacompra);
@@ -27,7 +30,8 @@ export class DetalheDespesaDto {
     const bairro = responseDespesaByMes.bairro;
     const cidade = responseDespesaByMes.cidade;
     const estado = responseDespesaByMes.estado;
-    const CEP = responseDespesaByMes.CEP;
+    const cep = responseDespesaByMes.cep;
+    const numero = responseDespesaByMes.numero;
     const logradouro = responseDespesaByMes.logradouro;
     const categoria = new Categoria(
       responseDespesaByMes.idcategoria,
@@ -46,12 +50,14 @@ export class DetalheDespesaDto {
       bairro,
       cidade,
       estado,
-      CEP,
+      cep,
+      numero,
       logradouro,
       categoria,
       tipoPagamento
     );
   }
+
   constructor(
     id: number,
     valor: string,
@@ -60,7 +66,8 @@ export class DetalheDespesaDto {
     bairro: string,
     cidade: string,
     estado: string,
-    CEP: string,
+    cep: string,
+    numero: string,
     logradouro: string,
     categoria: Categoria,
     tipoPagamento: TipoPagamento
@@ -72,7 +79,8 @@ export class DetalheDespesaDto {
     this.bairro = bairro;
     this.cidade = cidade;
     this.estado = estado;
-    this.CEP = CEP;
+    this.cep = cep;
+    this.numero = numero;
     this.logradouro = logradouro;
     this.categoria = categoria;
     this.tipoPagamento = tipoPagamento;

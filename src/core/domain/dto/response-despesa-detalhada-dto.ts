@@ -1,4 +1,4 @@
-export interface ResponseDespesaDetalhada {
+export interface ResponseDespesaDetalhadaDto {
   iddespesa: number;
   valor: number;
   datacompra: Date;
@@ -6,7 +6,8 @@ export interface ResponseDespesaDetalhada {
   bairro: string;
   cidade: string;
   estado: string;
-  CEP: string;
+  cep: string;
+  numero: string;
   logradouro: string;
   idtipopagamento: number;
   tipopagamento: string;

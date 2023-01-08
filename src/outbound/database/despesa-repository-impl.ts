@@ -4,8 +4,27 @@ import { DetalheDespesaDto } from "@dto/detalhe-despesa-dto";
 import logger from "../../core/config/logger";
 import { DatabaseConnection } from "@connections/database-connection";
 import { Pageable } from "@entity/Pageable";
-import { ResponseDespesaDetalhada } from "@responses/response-despesa-detalhada";
+import { ResponseDespesaDetalhadaDto } from "@dto/response-despesa-detalhada-dto";
 import { Despesa } from "@entity/Despesa";
+
+const INSERT_QUERY = `INSERT INTO despesa (idcategoria, idtipopagamento, valor, datacompra, descricao,
+                                           bairro, cidade,
+                                           estado, cep, numero, logradouro)
+                      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`;
+
+const UPDATE_QUERY = `UPDATE despesa
+                      SET idcategoria     = $1,
+                          idtipopagamento = $2,
+                          valor           = $3,
+                          datacompra      = $4,
+                          descricao       = $5,
+                          bairro          = $6,
+                          cidade          = $7,
+                          estado          = $8,
+                          cep             = $9,
+                          numero          = $10,
+                          logradouro      = $11
+                      WHERE id = $12`;
 
 export class DespesaRepositoryImpl implements DespesaRepository {
   private readonly client: DatabaseConnection;
@@ -14,9 +33,19 @@ export class DespesaRepositoryImpl implements DespesaRepository {
     this.client = client;
   }
 
+  async existsById(id: number): Promise<boolean> {
+    logger.info("[repository] Verificando se existe despesa %o", id);
+    const [{ exists }] = await this.client.query<{ exists: boolean }[]>(
+      `SELECT EXISTS(SELECT 1 FROM despesa WHERE id = $1)`,
+      [id]
+    );
+    logger.info("[repository] Despesa %o existe? %o", id, exists);
+    return exists;
+  }
+
   async findById(id: number): Promise<DetalheDespesaDto | undefined> {
     logger.info("[repository] Buscando despesa %o", id);
-    const [response] = await this.client.query<[ResponseDespesaDetalhada]>(
+    const [response] = await this.client.query<[ResponseDespesaDetalhadaDto]>(
       `SELECT d.id         AS idDespesa,
                     d.valor      AS valor,
                     d.dataCompra AS dataCompra,
@@ -25,6 +54,7 @@ export class DespesaRepositoryImpl implements DespesaRepository {
                     d.cidade     AS cidade,
                     d.estado     AS estado,
                     d.CEP        AS CEP,
+                    d.numero     AS numero,
                     d.logradouro AS logradouro,
                     t.id         AS idTipoPagamento,
                     t.tipo       AS tipoPagamento,
@@ -49,23 +79,20 @@ export class DespesaRepositoryImpl implements DespesaRepository {
   async save(despesa: Despesa): Promise<number | undefined> {
     try {
       logger.info("[repository] Salvando despesa: %o", despesa);
-      await this.client.query(
-        `INSERT INTO despesa (idcategoria, idtipopagamento, valor, datacompra, descricao, bairro, cidade,
-                                      estado, cep, logradouro)
-                 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`,
-        [
-          despesa.idCategoria,
-          despesa.idTipoPagamento,
-          despesa.valor,
-          despesa.dataCompra,
-          despesa.descricao,
-          despesa.bairro,
-          despesa.cidade,
-          despesa.estado,
-          despesa.CEP,
-          despesa.logradouro,
-        ]
-      );
+      await this.client.query(despesa.id ? UPDATE_QUERY : INSERT_QUERY, [
+        despesa.idCategoria,
+        despesa.idTipoPagamento,
+        despesa.valor,
+        despesa.dataCompra,
+        despesa.descricao,
+        despesa.bairro,
+        despesa.cidade,
+        despesa.estado,
+        despesa.CEP,
+        despesa.numero,
+        despesa.logradouro,
+        despesa.id,
+      ]);
       const [{ id }] = await this.client.query<{ id: number }[]>(
         `SELECT id
                  FROM despesa
@@ -92,7 +119,7 @@ export class DespesaRepositoryImpl implements DespesaRepository {
       options.dataFim,
       options
     );
-    const response = await this.client.query<ResponseDespesaDetalhada[]>(
+    const response = await this.client.query<ResponseDespesaDetalhadaDto[]>(
       `SELECT d.id         AS idDespesa,
                     d.valor      AS valor,
                     d.dataCompra AS dataCompra,
@@ -101,6 +128,7 @@ export class DespesaRepositoryImpl implements DespesaRepository {
                     d.cidade     AS cidade,
                     d.estado     AS estado,
                     d.CEP        AS CEP,
+                    d.numero     AS numero,
                     d.logradouro AS logradouro,
                     t.id         AS idTipoPagamento,
                     t.tipo       AS tipoPagamento,
@@ -153,7 +181,7 @@ export class DespesaRepositoryImpl implements DespesaRepository {
     options: Pageable = new Pageable(0, 10)
   ): Promise<Page<DetalheDespesaDto>> {
     logger.info("[repository] Buscando despesas do mes atual: %o", options);
-    const response = await this.client.query<ResponseDespesaDetalhada[]>(
+    const response = await this.client.query<ResponseDespesaDetalhadaDto[]>(
       `SELECT d.id         AS idDespesa,
                     d.valor      AS valor,
                     d.dataCompra AS dataCompra,
@@ -162,6 +190,7 @@ export class DespesaRepositoryImpl implements DespesaRepository {
                     d.cidade     AS cidade,
                     d.estado     AS estado,
                     d.CEP        AS CEP,
+                    d.numero     AS numero,
                     d.logradouro AS logradouro,
                     t.id         AS idTipoPagamento,
                     t.tipo       AS tipoPagamento,

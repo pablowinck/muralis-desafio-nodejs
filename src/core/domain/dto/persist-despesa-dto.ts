@@ -1,6 +1,6 @@
 import { IsNumber, Matches, MinLength } from "class-validator";
 
-export class CadastraDespesaDto {
+export class PersistDespesaDto {
   @MinLength(3, {
     message: "A descrição deve ter no mínimo 3 caracteres",
   })

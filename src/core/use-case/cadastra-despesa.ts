@@ -1,35 +1,29 @@
 import { DespesaRepository } from "@repository/despesa-repository";
-import { CategoriaRepository } from "@repository/categoria-repository";
-import { TipoPagamentoRepository } from "@repository/tipo-pagamento-repository";
-import { CadastraDespesaDto } from "@dto/cadastra-despesa-dto";
+import { PersistDespesaDto } from "@dto/persist-despesa-dto";
 import { PersistResponseDto } from "@dto/persist-response-dto";
 import { ViaCepRepository } from "@repository/via-cep-repository";
 import { Despesa } from "@entity/Despesa";
 import logger from "../config/logger";
 import { DateMapper } from "@mapper/date-mapper";
+import { BuscaCategoriaEspecifica } from "@usecase/busca-categoria-especifica";
+import { BuscaTipoPagamentoEspecifico } from "@usecase/busca-tipo-pagamento-especifico";
+import { HttpException } from "@entity/HttpException";
 
 export class CadastraDespesa {
   constructor(
     private readonly despesaRepository: DespesaRepository,
-    private readonly categoriaRepository: CategoriaRepository,
-    private readonly tipoPagamentoRepository: TipoPagamentoRepository,
+    private readonly buscaCategoriaEspecficica: BuscaCategoriaEspecifica,
+    private readonly buscaTipoPagamentoEspecifico: BuscaTipoPagamentoEspecifico,
     private readonly viaCepRepository: ViaCepRepository
   ) {}
 
-  async execute(dto: CadastraDespesaDto): Promise<PersistResponseDto> {
+  async execute(dto: PersistDespesaDto): Promise<PersistResponseDto> {
     logger.info("[use-case] Cadastrando despesa: %o", dto);
-    const categoria = await this.categoriaRepository.findById(dto.categoriaId);
-    if (!categoria)
-      return new PersistResponseDto("Categoria não encontrada", false);
-    const tipoPagamento = await this.tipoPagamentoRepository.findById(
-      dto.tipoPagamentoId
-    );
-    if (!tipoPagamento) {
-      return new PersistResponseDto("Tipo de pagamento não encontrado", false);
-    }
+    await this.buscaCategoriaEspecficica.execute(dto.categoriaId);
+    await this.buscaTipoPagamentoEspecifico.execute(dto.tipoPagamentoId);
     const viaCep = await this.viaCepRepository.findByCep(dto.cep);
     if (!viaCep || !viaCep?.cep) {
-      return new PersistResponseDto("CEP não encontrado", false);
+      throw new HttpException(400, "CEP não encontrado");
     }
     const despesa = new Despesa(
       undefined,
@@ -48,7 +42,7 @@ export class CadastraDespesa {
     );
     const result = await this.despesaRepository.save(despesa);
     if (!result) {
-      return new PersistResponseDto("Erro ao salvar a despesa", false);
+      throw new HttpException(500, "Erro ao salvar despesa");
     }
     logger.info("[use-case] Despesa cadastrada com sucesso com id %d", result);
     return new PersistResponseDto(`Despesa ${result} criada`, true);

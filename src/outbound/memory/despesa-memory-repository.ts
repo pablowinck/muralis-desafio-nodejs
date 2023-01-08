@@ -3,15 +3,19 @@ import { Pageable } from "@entity/Pageable";
 import { Page } from "@entity/Page";
 import { DetalheDespesaDto } from "@dto/detalhe-despesa-dto";
 import { Despesa } from "@entity/Despesa";
-import { ResponseDespesaDetalhada } from "@responses/response-despesa-detalhada";
+import { ResponseDespesaDetalhadaDto } from "@dto/response-despesa-detalhada-dto";
 
 export class DespesaMemoryRepository implements DespesaRepository {
   constructor(readonly despesas: Despesa[] = []) {}
 
+  existsById(id: number): Promise<boolean> {
+    return Promise.resolve(!!this.despesas.find((d) => d.id === id));
+  }
+
   findById(id: number): Promise<DetalheDespesaDto | undefined> {
     const despesa = this.despesas.find((d) => d.id === id);
     if (!despesa) return Promise.resolve(undefined);
-    const response: ResponseDespesaDetalhada = {
+    const response: ResponseDespesaDetalhadaDto = {
       iddespesa: despesa.id || 0,
       valor: despesa.valor,
       datacompra: despesa.dataCompra,
@@ -19,7 +23,8 @@ export class DespesaMemoryRepository implements DespesaRepository {
       bairro: despesa.bairro,
       cidade: despesa.cidade,
       estado: despesa.estado,
-      CEP: despesa.CEP,
+      cep: despesa.CEP,
+      numero: despesa.numero,
       logradouro: despesa.logradouro,
       idtipopagamento: 123,
       tipopagamento: "aleatorio",
@@ -43,7 +48,7 @@ export class DespesaMemoryRepository implements DespesaRepository {
           d.dataCompra.getDate() <= new Date(options.dataFim).getDate()
       )
       .map((despesa) => {
-        const response: ResponseDespesaDetalhada = {
+        const response: ResponseDespesaDetalhadaDto = {
           iddespesa: despesa.id || 0,
           valor: despesa.valor,
           datacompra: despesa.dataCompra,
@@ -51,7 +56,8 @@ export class DespesaMemoryRepository implements DespesaRepository {
           bairro: despesa.bairro,
           cidade: despesa.cidade,
           estado: despesa.estado,
-          CEP: despesa.CEP,
+          cep: despesa.CEP,
+          numero: despesa.numero,
           logradouro: despesa.logradouro,
           idtipopagamento: 123,
           tipopagamento: "aleatorio",
@@ -81,8 +87,12 @@ export class DespesaMemoryRepository implements DespesaRepository {
     return id;
   }
   async save(despesa: Despesa): Promise<number> {
-    despesa.id = this.generateId();
-    this.despesas.push(despesa);
+    if (despesa.descricao === "erro") return 0;
+    if (!despesa.id) {
+      despesa.id = this.generateId();
+      this.despesas.push(despesa);
+    }
+    this.despesas[this.despesas.indexOf(despesa)] = despesa;
     return Promise.resolve(despesa.id || 0);
   }
 
@@ -96,7 +106,7 @@ export class DespesaMemoryRepository implements DespesaRepository {
           d.dataCompra.getFullYear() === new Date().getFullYear()
       )
       .map((despesa) => {
-        const response: ResponseDespesaDetalhada = {
+        const response: ResponseDespesaDetalhadaDto = {
           iddespesa: despesa.id || 0,
           valor: despesa.valor,
           datacompra: despesa.dataCompra,
@@ -104,7 +114,8 @@ export class DespesaMemoryRepository implements DespesaRepository {
           bairro: despesa.bairro,
           cidade: despesa.cidade,
           estado: despesa.estado,
-          CEP: despesa.CEP,
+          cep: despesa.CEP,
+          numero: despesa.numero,
           logradouro: despesa.logradouro,
           idtipopagamento: 123,
           tipopagamento: "aleatorio",

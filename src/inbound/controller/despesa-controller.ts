@@ -4,8 +4,10 @@ import { Pageable } from "@entity/Pageable";
 import { CadastraDespesa } from "@usecase/cadastra-despesa";
 import { BuscaDespesasPorPeriodo } from "@usecase/busca-despesas-por-periodo";
 import { ValidationMiddleware } from "../middleware/validation-middleware";
-import { CadastraDespesaDto } from "@dto/cadastra-despesa-dto";
+import { PersistDespesaDto } from "@dto/persist-despesa-dto";
 import { BuscaDespesaEspecifica } from "@usecase/busca-despesa-especifica";
+import { AtualizaTodaDespesa } from "@usecase/atualiza-toda-despesa";
+import { UpdateDespesaDto } from "@dto/update-despesa-dto";
 
 export class DespesaController {
   constructor(
@@ -13,7 +15,8 @@ export class DespesaController {
     readonly buscaDespesasMesAtual: BuscaDespesasMesAtual,
     readonly buscaDespesasPorPeriodo: BuscaDespesasPorPeriodo,
     readonly buscaDespesaEspecifica: BuscaDespesaEspecifica,
-    readonly cadastraDespesa: CadastraDespesa
+    readonly cadastraDespesa: CadastraDespesa,
+    readonly atualizaTodaDespesa: AtualizaTodaDespesa
   ) {
     router.get("/api/despesas", async (req, res) => {
       await this.buscaDespesas(req, res);
@@ -25,9 +28,18 @@ export class DespesaController {
     });
     router.post(
       "/api/despesas",
-      ValidationMiddleware(CadastraDespesaDto),
+      ValidationMiddleware(PersistDespesaDto),
       async (req, res) => {
         const despesa = await cadastraDespesa.execute(req.body);
+        res.send(despesa);
+      }
+    );
+    router.put(
+      "/api/despesas/:id",
+      ValidationMiddleware(UpdateDespesaDto),
+      async (req, res) => {
+        const id = parseInt(req.params.id);
+        const despesa = await atualizaTodaDespesa.execute(id, req.body);
         res.send(despesa);
       }
     );

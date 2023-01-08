@@ -14,6 +14,9 @@ import { BuscaDespesasPorPeriodo } from "@usecase/busca-despesas-por-periodo";
 import { errorMiddleware } from "@inbound/middleware/error-middleware";
 import "express-async-errors";
 import { BuscaDespesaEspecifica } from "@usecase/busca-despesa-especifica";
+import { BuscaCategoriaEspecifica } from "@usecase/busca-categoria-especifica";
+import { BuscaTipoPagamentoEspecifico } from "@usecase/busca-tipo-pagamento-especifico";
+import { AtualizaTodaDespesa } from "@usecase/atualiza-toda-despesa";
 
 dotenv.config();
 
@@ -36,19 +39,30 @@ const viacepRepository = new ViaCepRepositoryImpl();
 const buscaDespesasMesAtual = new BuscaDespesasMesAtual(despesaRepository);
 const buscaDespesasPorPeriodo = new BuscaDespesasPorPeriodo(despesaRepository);
 const buscaDespesaEspecifica = new BuscaDespesaEspecifica(despesaRepository);
+const buscaCategoriaEspecifica = new BuscaCategoriaEspecifica(
+  categoriaRepository
+);
+const buscaTipoPagamentoEspecifico = new BuscaTipoPagamentoEspecifico(
+  tipoPagamentoRepository
+);
 const cadastraDespesa = new CadastraDespesa(
   despesaRepository,
-  categoriaRepository,
-  tipoPagamentoRepository,
+  buscaCategoriaEspecifica,
+  buscaTipoPagamentoEspecifico,
   viacepRepository
 );
-
+const atualizaTodaDespesa = new AtualizaTodaDespesa(
+  despesaRepository,
+  buscaCategoriaEspecifica,
+  buscaTipoPagamentoEspecifico
+);
 new DespesaController(
   router,
   buscaDespesasMesAtual,
   buscaDespesasPorPeriodo,
   buscaDespesaEspecifica,
-  cadastraDespesa
+  cadastraDespesa,
+  atualizaTodaDespesa
 );
 
 app.get("/", (req: Request, res: Response) => {

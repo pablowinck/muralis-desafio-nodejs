@@ -12,5 +12,6 @@ export interface DespesaRepository {
     dataInicio: string;
   }) => Promise<Page<DetalheDespesaDto>>;
   findById: (id: number) => Promise<DetalheDespesaDto | undefined>;
+  existsById: (id: number) => Promise<boolean>;
   save: (despesa: Despesa) => Promise<number | undefined>;
 }
