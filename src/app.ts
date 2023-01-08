@@ -5,6 +5,7 @@ import { PgConnection } from "./core/connections/pg-connection";
 import dotenv from "dotenv";
 import { DespesaRepositoryImpl } from "./outbound/database/despesa-repository-impl";
 import { BuscaDespesasMesAtual } from "./core/use-case/busca-despesas-mes-atual";
+import { DespesaController } from "./inbound/controller/despesa-controller";
 
 dotenv.config();
 
@@ -21,11 +22,10 @@ const client = new PgConnection();
 const despesaRepository = new DespesaRepositoryImpl(client);
 const buscaDespesasMesAtual = new BuscaDespesasMesAtual(despesaRepository);
 
-buscaDespesasMesAtual.execute();
+new DespesaController(app, buscaDespesasMesAtual);
 
 app.get("/", (req: Request, res: Response) => {
-  buscaDespesasMesAtual.execute();
-  res.send(JSON.stringify({ message: "Hello World!" }));
+  res.send(JSON.stringify({ message: "server is up!" }));
 });
 
 app.listen(port, () => {
