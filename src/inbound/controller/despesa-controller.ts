@@ -1,12 +1,12 @@
 import { IRouter } from "express";
-import { BuscaDespesasMesAtual } from "../../core/use-case/busca-despesas-mes-atual";
-import { Pageable } from "../../core/domain/entity/Pageable";
-import { CadastraDespesa } from "../../core/use-case/cadastra-despesa";
-import { BuscaDespesasPorPeriodo } from "../../core/use-case/busca-despesas-por-periodo";
-import { HttpException } from "../../core/domain/entity/HttpException";
+import { BuscaDespesasMesAtual } from "@usecase/busca-despesas-mes-atual";
+import { Pageable } from "@entity/Pageable";
+import { CadastraDespesa } from "@usecase/cadastra-despesa";
+import { BuscaDespesasPorPeriodo } from "@usecase/busca-despesas-por-periodo";
+import { HttpException } from "@entity/HttpException";
 import { ValidationMiddleware } from "../middleware/validation-middleware";
-import { CadastraDespesaDto } from "../../core/domain/dto/cadastra-despesa-dto";
-import { BuscaDespesaEspecifica } from "../../core/use-case/busca-despesa-especifica";
+import { CadastraDespesaDto } from "@dto/cadastra-despesa-dto";
+import { BuscaDespesaEspecifica } from "@usecase/busca-despesa-especifica";
 
 export class DespesaController {
   constructor(

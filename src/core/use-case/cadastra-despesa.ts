@@ -1,12 +1,12 @@
-import { DespesaRepository } from "../repository/despesa-repository";
-import { CategoriaRepository } from "../repository/categoria-repository";
-import { TipoPagamentoRepository } from "../repository/tipo-pagamento-repository";
-import { CadastraDespesaDto } from "../domain/dto/cadastra-despesa-dto";
-import { PersistResponseDto } from "../domain/dto/persist-response-dto";
-import { ViaCepRepository } from "../repository/via-cep-repository";
-import { Despesa } from "../domain/entity/Despesa";
+import { DespesaRepository } from "@repository/despesa-repository";
+import { CategoriaRepository } from "@repository/categoria-repository";
+import { TipoPagamentoRepository } from "@repository/tipo-pagamento-repository";
+import { CadastraDespesaDto } from "@dto/cadastra-despesa-dto";
+import { PersistResponseDto } from "@dto/persist-response-dto";
+import { ViaCepRepository } from "@repository/via-cep-repository";
+import { Despesa } from "@entity/Despesa";
 import logger from "../config/logger";
-import { DateMapper } from "../domain/mapper/date-mapper";
+import { DateMapper } from "@mapper/date-mapper";
 
 export class CadastraDespesa {
   constructor(

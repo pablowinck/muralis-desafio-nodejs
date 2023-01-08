@@ -1,4 +1,4 @@
-import { TipoPagamento } from "../domain/entity/TipoPagamento";
+import { TipoPagamento } from "@entity/TipoPagamento";
 
 export interface TipoPagamentoRepository {
   findById: (id: number) => Promise<TipoPagamento>;

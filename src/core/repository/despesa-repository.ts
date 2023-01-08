@@ -1,7 +1,7 @@
-import { DetalheDespesaDto } from "../domain/dto/detalhe-despesa-dto";
-import { Page } from "../domain/entity/Page";
-import { Pageable } from "../domain/entity/Pageable";
-import { Despesa } from "../domain/entity/Despesa";
+import { DetalheDespesaDto } from "@dto/detalhe-despesa-dto";
+import { Page } from "@entity/Page";
+import { Pageable } from "@entity/Pageable";
+import { Despesa } from "@entity/Despesa";
 
 export interface DespesaRepository {
   findByMesAtual: (options?: Pageable) => Promise<Page<DetalheDespesaDto>>;

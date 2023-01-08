@@ -1,8 +1,8 @@
-import { DetalheDespesaDto } from "../domain/dto/detalhe-despesa-dto";
-import { DespesaRepository } from "../repository/despesa-repository";
+import { DetalheDespesaDto } from "@dto/detalhe-despesa-dto";
+import { DespesaRepository } from "@repository/despesa-repository";
 import logger from "../config/logger";
-import { Page } from "../domain/entity/Page";
-import { Pageable } from "../domain/entity/Pageable";
+import { Page } from "@entity/Page";
+import { Pageable } from "@entity/Pageable";
 
 export class BuscaDespesasMesAtual {
   constructor(private readonly despesaRepository: DespesaRepository) {}

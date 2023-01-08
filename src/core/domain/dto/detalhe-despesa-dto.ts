@@ -1,8 +1,8 @@
-import { Categoria } from "../entity/Categoria";
-import { TipoPagamento } from "../entity/TipoPagamento";
-import { ResponseDespesaDetalhada } from "../responses/response-despesa-detalhada";
-import { ValorMapper } from "../mapper/valor-mapper";
-import { DateMapper } from "../mapper/date-mapper";
+import { Categoria } from "@entity/Categoria";
+import { TipoPagamento } from "@entity/TipoPagamento";
+import { ValorMapper } from "@mapper/valor-mapper";
+import { DateMapper } from "@mapper/date-mapper";
+import { ResponseDespesaDetalhada } from "@responses/response-despesa-detalhada";
 
 export class DetalheDespesaDto {
   id: number;

@@ -1,6 +1,6 @@
-import { DespesaRepository } from "../repository/despesa-repository";
-import { Page } from "../domain/entity/Page";
-import { DetalheDespesaDto } from "../domain/dto/detalhe-despesa-dto";
+import { DespesaRepository } from "@repository/despesa-repository";
+import { Page } from "@entity/Page";
+import { DetalheDespesaDto } from "@dto/detalhe-despesa-dto";
 import logger from "../config/logger";
 
 export class BuscaDespesasPorPeriodo {

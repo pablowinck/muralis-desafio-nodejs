@@ -1,6 +1,6 @@
-import { CategoriaRepository } from "../../core/repository/categoria-repository";
-import { DatabaseConnection } from "../../core/connections/database-connection";
-import { Categoria } from "../../core/domain/entity/Categoria";
+import { CategoriaRepository } from "@repository/categoria-repository";
+import { DatabaseConnection } from "@connections/database-connection";
+import { Categoria } from "@entity/Categoria";
 
 export class CategoriaRepositoryImpl implements CategoriaRepository {
   private readonly client: DatabaseConnection;

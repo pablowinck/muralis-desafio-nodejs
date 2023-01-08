@@ -1,5 +1,5 @@
-import { ViaCepRepository } from "../../core/repository/via-cep-repository";
-import { ViaCep } from "../../core/domain/entity/ViaCep";
+import { ViaCepRepository } from "@repository/via-cep-repository";
+import { ViaCep } from "@entity/ViaCep";
 import axios from "axios";
 
 export class ViaCepRepositoryImpl implements ViaCepRepository {

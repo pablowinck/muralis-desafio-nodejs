@@ -1,5 +1,5 @@
 import { RequestHandler } from "express";
-import { HttpException } from "../../core/domain/entity/HttpException";
+import { HttpException } from "@entity/HttpException";
 import { validate, ValidationError } from "class-validator";
 import { plainToInstance } from "class-transformer";
 import { sanitize } from "class-sanitizer";

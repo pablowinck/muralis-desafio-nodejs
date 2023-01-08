@@ -1,7 +1,7 @@
-import { DespesaRepository } from "../repository/despesa-repository";
-import { DetalheDespesaDto } from "../domain/dto/detalhe-despesa-dto";
+import { DespesaRepository } from "@repository/despesa-repository";
+import { DetalheDespesaDto } from "@dto/detalhe-despesa-dto";
 import logger from "../config/logger";
-import { HttpException } from "../domain/entity/HttpException";
+import { HttpException } from "@entity/HttpException";
 
 export class BuscaDespesaEspecifica {
   constructor(private readonly despesaRepository: DespesaRepository) {}

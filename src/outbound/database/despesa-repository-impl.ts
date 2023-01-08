@@ -1,11 +1,11 @@
-import { DespesaRepository } from "../../core/repository/despesa-repository";
-import { Page } from "../../core/domain/entity/Page";
-import { DetalheDespesaDto } from "../../core/domain/dto/detalhe-despesa-dto";
+import { DespesaRepository } from "@repository/despesa-repository";
+import { Page } from "@entity/Page";
+import { DetalheDespesaDto } from "@dto/detalhe-despesa-dto";
 import logger from "../../core/config/logger";
-import { DatabaseConnection } from "../../core/connections/database-connection";
-import { Pageable } from "../../core/domain/entity/Pageable";
-import { ResponseDespesaDetalhada } from "../../core/domain/responses/response-despesa-detalhada";
-import { Despesa } from "../../core/domain/entity/Despesa";
+import { DatabaseConnection } from "@connections/database-connection";
+import { Pageable } from "@entity/Pageable";
+import { ResponseDespesaDetalhada } from "@responses/response-despesa-detalhada";
+import { Despesa } from "@entity/Despesa";
 
 export class DespesaRepositoryImpl implements DespesaRepository {
   private readonly client: DatabaseConnection;

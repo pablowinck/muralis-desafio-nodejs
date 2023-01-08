@@ -1,6 +1,6 @@
-import { DatabaseConnection } from "../../core/connections/database-connection";
-import { TipoPagamentoRepository } from "../../core/repository/tipo-pagamento-repository";
-import { TipoPagamento } from "../../core/domain/entity/TipoPagamento";
+import { DatabaseConnection } from "@connections/database-connection";
+import { TipoPagamentoRepository } from "@repository/tipo-pagamento-repository";
+import { TipoPagamento } from "@entity/TipoPagamento";
 
 export class TipoPagamentoRepositoryImpl implements TipoPagamentoRepository {
   private readonly client: DatabaseConnection;

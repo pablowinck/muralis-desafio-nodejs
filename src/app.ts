@@ -1,19 +1,19 @@
 import express, { Express, Request, Response } from "express";
 import morgan from "morgan";
 import logger from "./core/config/logger";
-import { PgConnection } from "./core/connections/pg-connection";
+import { PgConnection } from "@connections/pg-connection";
 import dotenv from "dotenv";
-import { DespesaRepositoryImpl } from "./outbound/database/despesa-repository-impl";
-import { BuscaDespesasMesAtual } from "./core/use-case/busca-despesas-mes-atual";
-import { DespesaController } from "./inbound/controller/despesa-controller";
-import { CategoriaRepositoryImpl } from "./outbound/database/categoria-repository-impl";
-import { TipoPagamentoRepositoryImpl } from "./outbound/database/tipo-pagamento-repository-impl";
-import { ViaCepRepositoryImpl } from "./outbound/rest/via-cep-repository-impl";
-import { CadastraDespesa } from "./core/use-case/cadastra-despesa";
-import { BuscaDespesasPorPeriodo } from "./core/use-case/busca-despesas-por-periodo";
-import { errorMiddleware } from "./inbound/middleware/error-middleware";
+import { DespesaRepositoryImpl } from "@outbound/database/despesa-repository-impl";
+import { BuscaDespesasMesAtual } from "@usecase/busca-despesas-mes-atual";
+import { DespesaController } from "@inbound/controller/despesa-controller";
+import { CategoriaRepositoryImpl } from "@outbound/database/categoria-repository-impl";
+import { TipoPagamentoRepositoryImpl } from "@outbound/database/tipo-pagamento-repository-impl";
+import { ViaCepRepositoryImpl } from "@outbound/rest/via-cep-repository-impl";
+import { CadastraDespesa } from "@usecase/cadastra-despesa";
+import { BuscaDespesasPorPeriodo } from "@usecase/busca-despesas-por-periodo";
+import { errorMiddleware } from "@inbound/middleware/error-middleware";
 import "express-async-errors";
-import { BuscaDespesaEspecifica } from "./core/use-case/busca-despesa-especifica";
+import { BuscaDespesaEspecifica } from "@usecase/busca-despesa-especifica";
 
 dotenv.config();
 

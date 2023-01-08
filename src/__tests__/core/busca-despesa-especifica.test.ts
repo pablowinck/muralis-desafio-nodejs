@@ -1,7 +1,7 @@
-import { BuscaDespesaEspecifica } from "../../core/use-case/busca-despesa-especifica";
+import { HttpException } from "@entity/HttpException";
+import { Despesa } from "@entity/Despesa";
 import { DespesaMemoryRepository } from "../outbound/despesa-memory-repository";
-import { Despesa } from "../../core/domain/entity/Despesa";
-import { HttpException } from "../../core/domain/entity/HttpException";
+import { BuscaDespesaEspecifica } from "@usecase/busca-despesa-especifica";
 
 const repository = new DespesaMemoryRepository();
 const buscaDespesaEspecifica = new BuscaDespesaEspecifica(repository);
