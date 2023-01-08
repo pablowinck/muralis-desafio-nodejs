@@ -6,6 +6,7 @@ import { PersistResponseDto } from "../domain/dto/persist-response-dto";
 import { ViaCepRepository } from "../repository/via-cep-repository";
 import { Despesa } from "../domain/entity/Despesa";
 import logger from "../config/logger";
+import { DateMapper } from "../domain/mapper/date-mapper";
 
 export class CadastraDespesa {
   constructor(
@@ -33,7 +34,7 @@ export class CadastraDespesa {
     const despesa = new Despesa(
       undefined,
       dto.valor || 0,
-      dto.data,
+      DateMapper.from(dto.data),
       dto.descricao,
       dto.tipoPagamentoId,
       dto.categoriaId,
