@@ -88,17 +88,21 @@ export class DespesaMemoryRepository implements DespesaRepository {
   }
 
   async save(despesa: Despesa): Promise<number> {
-    if (despesa.descricao === "erro") return 0;
-    if (!despesa.id) {
-      despesa.id = this.generateId();
-      this.despesas.push(despesa);
+    try {
+      if (despesa.descricao === "erro") return 0;
+      if (!despesa.id) {
+        despesa.id = this.generateId();
+        this.despesas.push(despesa);
+      }
+      this.despesas.splice(
+        this.despesas.findIndex((d) => d.id === despesa.id),
+        1,
+        despesa
+      );
+      return Promise.resolve(despesa.id || 0);
+    } catch (error) {
+      return 0;
     }
-    this.despesas.splice(
-      this.despesas.findIndex((d) => d.id === despesa.id),
-      1,
-      despesa
-    );
-    return Promise.resolve(despesa.id || 0);
   }
 
   async findByMesAtual(

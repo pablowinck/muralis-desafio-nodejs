@@ -103,7 +103,7 @@ export class DespesaRepositoryImpl implements DespesaRepository {
       return id;
     } catch (error) {
       logger.error("[repository] Erro ao salvar despesa: %o", error);
-      return undefined;
+      return 0;
     }
   }
 
