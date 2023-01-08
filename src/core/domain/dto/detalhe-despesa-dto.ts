@@ -1,10 +1,12 @@
 import { Categoria } from "../entity/Categoria";
 import { TipoPagamento } from "../entity/TipoPagamento";
 import { ResponseDespesaByMes } from "../responses/response-despesa-by-mes";
+import { ValorMapper } from "../mapper/valor-mapper";
+import { DateMapper } from "../mapper/date-mapper";
 
 export class DetalheDespesaDto {
   id: number;
-  valor: number;
+  valor: string;
   data: string;
   descricao: string;
   bairro: string;
@@ -17,8 +19,8 @@ export class DetalheDespesaDto {
 
   static from(responseDespesaByMes: ResponseDespesaByMes): DetalheDespesaDto {
     const id = responseDespesaByMes.iddespesa;
-    const valor = responseDespesaByMes.valor;
-    const data = responseDespesaByMes.datacompra.toISOString()?.split("T")[0];
+    const valor = ValorMapper.format(+responseDespesaByMes.valor);
+    const data = DateMapper.format(responseDespesaByMes.datacompra);
     const descricao = responseDespesaByMes.descricaodespesa;
     const bairro = responseDespesaByMes.bairro;
     const cidade = responseDespesaByMes.cidade;
@@ -50,7 +52,7 @@ export class DetalheDespesaDto {
   }
   constructor(
     id: number,
-    valor: number,
+    valor: string,
     data: string,
     descricao: string,
     bairro: string,
