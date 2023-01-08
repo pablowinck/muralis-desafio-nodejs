@@ -1,6 +1,6 @@
 import { HttpException } from "@entity/HttpException";
 import { Despesa } from "@entity/Despesa";
-import { DespesaMemoryRepository } from "../outbound/despesa-memory-repository";
+import { DespesaMemoryRepository } from "@outbound/memory/despesa-memory-repository";
 import { BuscaDespesaEspecifica } from "@usecase/busca-despesa-especifica";
 
 const repository = new DespesaMemoryRepository();

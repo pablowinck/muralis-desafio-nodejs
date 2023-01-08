@@ -1,9 +1,9 @@
-import { DespesaRepository } from "../../core/repository/despesa-repository";
-import { Pageable } from "../../core/domain/entity/Pageable";
-import { Page } from "../../core/domain/entity/Page";
-import { DetalheDespesaDto } from "../../core/domain/dto/detalhe-despesa-dto";
-import { Despesa } from "../../core/domain/entity/Despesa";
-import { ResponseDespesaDetalhada } from "../../core/domain/responses/response-despesa-detalhada";
+import { DespesaRepository } from "@repository/despesa-repository";
+import { Pageable } from "@entity/Pageable";
+import { Page } from "@entity/Page";
+import { DetalheDespesaDto } from "@dto/detalhe-despesa-dto";
+import { Despesa } from "@entity/Despesa";
+import { ResponseDespesaDetalhada } from "@responses/response-despesa-detalhada";
 
 export class DespesaMemoryRepository implements DespesaRepository {
   constructor(readonly despesas: Despesa[] = []) {}
