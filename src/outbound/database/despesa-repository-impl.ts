@@ -62,24 +62,25 @@ export class DespesaRepositoryImpl implements DespesaRepository {
     );
     const response = await this.client.query<ResponseDespesaByMes[]>(
       `SELECT d.id         AS idDespesa,
-                    d.valor      AS valor,
-                    d.dataCompra AS dataCompra,
-                    d.descricao  AS descricaoDespesa,
-                    d.bairro     AS bairro,
-                    d.cidade     AS cidade,
-                    d.estado     AS estado,
-                    d.CEP        AS CEP,
-                    d.logradouro AS logradouro,
-                    t.id         AS idTipoPagamento,
-                    t.tipo       AS tipoPagamento,
-                    c.id         AS idCategoria,
-                    c.nome       AS nomeCategoria,
-                    c.descricao  AS descricaoCategoria
-             FROM despesa d
-                      LEFT JOIN categoria c ON d.idcategoria = c.id
-                      LEFT JOIN tipopagamento t on t.id = d.idtipopagamento
-             WHERE d.dataCompra BETWEEN $1 AND $2
-             LIMIT $3 OFFSET $4`,
+              d.valor      AS valor,
+              d.dataCompra AS dataCompra,
+              d.descricao  AS descricaoDespesa,
+              d.bairro     AS bairro,
+              d.cidade     AS cidade,
+              d.estado     AS estado,
+              d.CEP        AS CEP,
+              d.logradouro AS logradouro,
+              t.id         AS idTipoPagamento,
+              t.tipo       AS tipoPagamento,
+              c.id         AS idCategoria,
+              c.nome       AS nomeCategoria,
+              c.descricao  AS descricaoCategoria
+       FROM despesa d
+                LEFT JOIN categoria c ON d.idcategoria = c.id
+                LEFT JOIN tipopagamento t on t.id = d.idtipopagamento
+       WHERE d.dataCompra BETWEEN $1 AND $2
+       ORDER BY d.dataCompra DESC
+       LIMIT $3 OFFSET $4`,
       [
         options.dataInicio,
         options.dataFim,
@@ -122,24 +123,25 @@ export class DespesaRepositoryImpl implements DespesaRepository {
     logger.info("[repository] Buscando despesas do mes atual: %o", options);
     const response = await this.client.query<ResponseDespesaByMes[]>(
       `SELECT d.id         AS idDespesa,
-                    d.valor      AS valor,
-                    d.dataCompra AS dataCompra,
-                    d.descricao  AS descricaoDespesa,
-                    d.bairro     AS bairro,
-                    d.cidade     AS cidade,
-                    d.estado     AS estado,
-                    d.CEP        AS CEP,
-                    d.logradouro AS logradouro,
-                    t.id         AS idTipoPagamento,
-                    t.tipo       AS tipoPagamento,
-                    c.id         AS idCategoria,
-                    c.nome       AS nomeCategoria,
-                    c.descricao  AS descricaoCategoria
-             FROM despesa d
-                      LEFT JOIN categoria c ON d.idcategoria = c.id
-                      LEFT JOIN tipopagamento t on t.id = d.idtipopagamento
-             WHERE EXTRACT(MONTH FROM d.datacompra) = EXTRACT(MONTH FROM CURRENT_DATE)
-             LIMIT $1 OFFSET $2`,
+              d.valor      AS valor,
+              d.dataCompra AS dataCompra,
+              d.descricao  AS descricaoDespesa,
+              d.bairro     AS bairro,
+              d.cidade     AS cidade,
+              d.estado     AS estado,
+              d.CEP        AS CEP,
+              d.logradouro AS logradouro,
+              t.id         AS idTipoPagamento,
+              t.tipo       AS tipoPagamento,
+              c.id         AS idCategoria,
+              c.nome       AS nomeCategoria,
+              c.descricao  AS descricaoCategoria
+       FROM despesa d
+                LEFT JOIN categoria c ON d.idcategoria = c.id
+                LEFT JOIN tipopagamento t on t.id = d.idtipopagamento
+       WHERE EXTRACT(MONTH FROM d.datacompra) = EXTRACT(MONTH FROM CURRENT_DATE)
+       ORDER BY d.dataCompra DESC
+       LIMIT $1 OFFSET $2`,
       [options.size, options.page * options.size]
     );
     const despesas: DetalheDespesaDto[] = response.map((despesa) =>
