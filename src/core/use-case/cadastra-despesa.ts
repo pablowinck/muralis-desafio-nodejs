@@ -50,6 +50,6 @@ export class CadastraDespesa {
       return new PersistResponseDto("Erro ao salvar a despesa", false);
     }
     logger.info("[use-case] Despesa cadastrada com sucesso com id %d", result);
-    return new PersistResponseDto(`Entry ${result} created`, true);
+    return new PersistResponseDto(`Despesa ${result} criada`, true);
   }
 }
