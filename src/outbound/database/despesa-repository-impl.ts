@@ -6,21 +6,6 @@ import { DatabaseConnection } from "../../core/connections/database-connection";
 import { Pageable } from "../../core/domain/entity/Pageable";
 import { ResponseDespesaByMes } from "../../core/domain/responses/response-despesa-by-mes";
 
-// d.id AS idDespesa,
-//     d.valor AS valor,
-//     d.dataCompra AS dataCompra,
-//     d.descricao AS descricaoDespesa,
-//     d.bairro AS bairro,
-//     d.cidade AS cidade,
-//     d.estado AS estado,
-//     d.CEP AS CEP,
-//     d.logradouro AS logradouro,
-//     t.id AS idTipoPagamento,
-//     t.tipo AS tipoPagamento,
-//     c.id AS idCategoria,
-//     c.nome AS nomeCategoria,
-//     c.descricao AS descricaoCategoria
-
 export class DespesaRepositoryImpl implements DespesaRepository {
   private readonly client: DatabaseConnection;
 
@@ -31,7 +16,7 @@ export class DespesaRepositoryImpl implements DespesaRepository {
   async findDespesaByMesAtual(
     options: Pageable = new Pageable(0, 10)
   ): Promise<Page<DespesaDto>> {
-    logger.info("[repository] Buscando despesas do mes atual");
+    logger.info("[repository] Buscando despesas do mes atual: %o", options);
     const response = await this.client.query<ResponseDespesaByMes[]>(
       `SELECT d.id         AS idDespesa,
                     d.valor      AS valor,
@@ -68,7 +53,7 @@ export class DespesaRepositoryImpl implements DespesaRepository {
       despesas,
       options.page,
       despesas.length,
-      count,
+      +count,
       +(count / options.size).toFixed(0)
     );
   }
