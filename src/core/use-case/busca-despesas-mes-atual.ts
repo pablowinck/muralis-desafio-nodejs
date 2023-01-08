@@ -7,9 +7,9 @@ export class BuscaDespesasMesAtual {
   constructor(private readonly despesaRepository: DespesaRepository) {}
 
   async execute(): Promise<Page<DespesaDto>> {
-    logger.info("Buscando despesas do mês atual");
+    logger.info("[use-case] Buscando despesas do mes atual");
     const despesas = await this.despesaRepository.findDespesaByMesAtual();
-    logger.info("Despesas do mês atual buscadas com sucesso: %o", despesas);
+    logger.info("[use-case] Despesas do mes atual buscadas com sucesso");
     return despesas;
   }
 }

@@ -3,7 +3,7 @@ import morgan from "morgan";
 import logger from "./core/config/logger";
 import { PgConnection } from "./core/connections/pg-connection";
 import dotenv from "dotenv";
-import { DatabaseDespesaRepositoryImpl } from "./outbound/database.despesa-repository-impl";
+import { DespesaRepositoryImpl } from "./outbound/database/despesa-repository-impl";
 import { BuscaDespesasMesAtual } from "./core/use-case/busca-despesas-mes-atual";
 
 dotenv.config();
@@ -18,8 +18,10 @@ app.use(
 );
 
 const client = new PgConnection();
-const despesaRepository = new DatabaseDespesaRepositoryImpl(client);
+const despesaRepository = new DespesaRepositoryImpl(client);
 const buscaDespesasMesAtual = new BuscaDespesasMesAtual(despesaRepository);
+
+buscaDespesasMesAtual.execute();
 
 app.get("/", (req: Request, res: Response) => {
   buscaDespesasMesAtual.execute();

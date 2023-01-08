@@ -9,6 +9,7 @@ export class PgConnection implements DatabaseConnection {
 
   constructor() {
     this.pgp = pgp()(process.env.DATABASE_URL || "");
+    this.pgp.query(sql);
   }
 
   async close(): Promise<void> {

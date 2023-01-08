@@ -1,12 +1,76 @@
 import { Categoria } from "../entity/Categoria";
 import { TipoPagamento } from "../entity/TipoPagamento";
+import { ResponseDespesaByMes } from "../responses/response-despesa-by-mes";
 
 export class DespesaDto {
+  id: number;
+  valor: number;
+  data: string;
+  descricao: string;
+  bairro: string;
+  cidade: string;
+  estado: string;
+  CEP: string;
+  logradouro: string;
+  categoria: Categoria;
+  tipoPagamento: TipoPagamento;
+
+  static from(responseDespesaByMes: ResponseDespesaByMes): DespesaDto {
+    const id = responseDespesaByMes.iddespesa;
+    const valor = responseDespesaByMes.valor;
+    const data = responseDespesaByMes.datacompra.toISOString()?.split("T")[0];
+    const descricao = responseDespesaByMes.descricaocategoria;
+    const bairro = responseDespesaByMes.bairro;
+    const cidade = responseDespesaByMes.cidade;
+    const estado = responseDespesaByMes.estado;
+    const CEP = responseDespesaByMes.CEP;
+    const logradouro = responseDespesaByMes.logradouro;
+    const categoria = new Categoria(
+      responseDespesaByMes.idcategoria,
+      responseDespesaByMes.nomecategoria,
+      responseDespesaByMes.descricaocategoria
+    );
+    const tipoPagamento = new TipoPagamento(
+      responseDespesaByMes.idtipopagamento,
+      responseDespesaByMes.tipopagamento
+    );
+    return new DespesaDto(
+      id,
+      valor,
+      data,
+      descricao,
+      bairro,
+      cidade,
+      estado,
+      CEP,
+      logradouro,
+      categoria,
+      tipoPagamento
+    );
+  }
   constructor(
-    readonly id: number,
-    readonly valor: number,
-    readonly data: string,
-    readonly categoria: Categoria,
-    readonly tipoPagamento: TipoPagamento
-  ) {}
+    id: number,
+    valor: number,
+    data: string,
+    descricao: string,
+    bairro: string,
+    cidade: string,
+    estado: string,
+    CEP: string,
+    logradouro: string,
+    categoria: Categoria,
+    tipoPagamento: TipoPagamento
+  ) {
+    this.id = id;
+    this.valor = valor;
+    this.data = data;
+    this.descricao = descricao;
+    this.bairro = bairro;
+    this.cidade = cidade;
+    this.estado = estado;
+    this.CEP = CEP;
+    this.logradouro = logradouro;
+    this.categoria = categoria;
+    this.tipoPagamento = tipoPagamento;
+  }
 }
