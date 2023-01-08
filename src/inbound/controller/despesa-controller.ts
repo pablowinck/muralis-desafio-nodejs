@@ -4,6 +4,8 @@ import { Pageable } from "../../core/domain/entity/Pageable";
 import { CadastraDespesa } from "../../core/use-case/cadastra-despesa";
 import { BuscaDespesasPorPeriodo } from "../../core/use-case/busca-despesas-por-periodo";
 import { HttpException } from "../../core/domain/entity/HttpException";
+import { ValidationMiddleware } from "../middleware/validation-middleware";
+import { CadastraDespesaDto } from "../../core/domain/dto/cadastra-despesa-dto";
 
 export class DespesaController {
   constructor(
@@ -40,9 +42,13 @@ export class DespesaController {
       );
       res.json(despesas);
     });
-    router.post("/api/despesas", async (req, res) => {
-      const despesa = await cadastraDespesa.execute(req.body);
-      res.send(despesa);
-    });
+    router.post(
+      "/api/despesas",
+      ValidationMiddleware(CadastraDespesaDto),
+      async (req, res) => {
+        const despesa = await cadastraDespesa.execute(req.body);
+        res.send(despesa);
+      }
+    );
   }
 }
