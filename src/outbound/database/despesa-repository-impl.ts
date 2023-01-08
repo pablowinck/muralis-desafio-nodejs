@@ -48,6 +48,74 @@ export class DespesaRepositoryImpl implements DespesaRepository {
     }
   }
 
+  async findDespesaByDatas(options: {
+    size: number;
+    dataFim: string;
+    page: number;
+    dataInicio: string;
+  }): Promise<Page<DetalheDespesaDto>> {
+    logger.info(
+      "[repository] Buscando despesas entre %s e %s: %o",
+      options.dataInicio,
+      options.dataFim,
+      options
+    );
+    const response = await this.client.query<ResponseDespesaByMes[]>(
+      `SELECT d.id         AS idDespesa,
+                    d.valor      AS valor,
+                    d.dataCompra AS dataCompra,
+                    d.descricao  AS descricaoDespesa,
+                    d.bairro     AS bairro,
+                    d.cidade     AS cidade,
+                    d.estado     AS estado,
+                    d.CEP        AS CEP,
+                    d.logradouro AS logradouro,
+                    t.id         AS idTipoPagamento,
+                    t.tipo       AS tipoPagamento,
+                    c.id         AS idCategoria,
+                    c.nome       AS nomeCategoria,
+                    c.descricao  AS descricaoCategoria
+             FROM despesa d
+                      LEFT JOIN categoria c ON d.idcategoria = c.id
+                      LEFT JOIN tipopagamento t on t.id = d.idtipopagamento
+             WHERE d.dataCompra BETWEEN $1 AND $2
+             LIMIT $3 OFFSET $4`,
+      [
+        options.dataInicio,
+        options.dataFim,
+        options.size,
+        options.page * options.size,
+      ]
+    );
+    const despesas: DetalheDespesaDto[] = response.map((despesa) =>
+      DetalheDespesaDto.from(despesa)
+    );
+    logger.info(
+      "[repository] Despesas entre %s e %s buscadas com sucesso",
+      options.dataInicio,
+      options.dataFim
+    );
+    const [{ count }] = await this.client.query<{ count: number }[]>(
+      `SELECT COUNT(*)
+             FROM despesa
+             WHERE dataCompra BETWEEN $1 AND $2`,
+      [options.dataInicio, options.dataFim]
+    );
+    logger.info(
+      "[repository] Total de %o despesas entre %s e %s",
+      count,
+      options.dataInicio,
+      options.dataFim
+    );
+    return new Page<DetalheDespesaDto>(
+      despesas,
+      options.page,
+      despesas.length,
+      +count,
+      +(count / options.size).toFixed(0)
+    );
+  }
+
   async findDespesaByMesAtual(
     options: Pageable = new Pageable(0, 10)
   ): Promise<Page<DetalheDespesaDto>> {

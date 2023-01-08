@@ -7,5 +7,11 @@ export interface DespesaRepository {
   findDespesaByMesAtual: (
     options?: Pageable
   ) => Promise<Page<DetalheDespesaDto>>;
+  findDespesaByDatas: (options: {
+    size: number;
+    dataFim: string;
+    page: number;
+    dataInicio: string;
+  }) => Promise<Page<DetalheDespesaDto>>;
   save: (despesa: Despesa) => Promise<number | undefined>;
 }

@@ -10,6 +10,9 @@ import { CategoriaRepositoryImpl } from "./outbound/database/categoria-repositor
 import { TipoPagamentoRepositoryImpl } from "./outbound/database/tipo-pagamento-repository-impl";
 import { ViaCepRepositoryImpl } from "./outbound/rest/via-cep-repository-impl";
 import { CadastraDespesa } from "./core/use-case/cadastra-despesa";
+import { BuscaDespesasPorPeriodo } from "./core/use-case/busca-despesas-por-periodo";
+import { errorMiddleware } from "./inbound/middleware/error-middleware";
+import "express-async-errors";
 
 dotenv.config();
 
@@ -22,12 +25,15 @@ app.use(
   morgan(":method :url :status :res[content-length] - :response-time ms")
 );
 
+const router = express.Router();
+
 const client = new PgConnection();
 const despesaRepository = new DespesaRepositoryImpl(client);
 const categoriaRepository = new CategoriaRepositoryImpl(client);
 const tipoPagamentoRepository = new TipoPagamentoRepositoryImpl(client);
 const viacepRepository = new ViaCepRepositoryImpl();
 const buscaDespesasMesAtual = new BuscaDespesasMesAtual(despesaRepository);
+const buscaDespesasPorPeriodo = new BuscaDespesasPorPeriodo(despesaRepository);
 const cadastraDespesa = new CadastraDespesa(
   despesaRepository,
   categoriaRepository,
@@ -35,12 +41,19 @@ const cadastraDespesa = new CadastraDespesa(
   viacepRepository
 );
 
-new DespesaController(app, buscaDespesasMesAtual, cadastraDespesa);
+new DespesaController(
+  router,
+  buscaDespesasMesAtual,
+  buscaDespesasPorPeriodo,
+  cadastraDespesa
+);
 
 app.get("/", (req: Request, res: Response) => {
   res.send(JSON.stringify({ message: "server is up!" }));
 });
-
+app.use(errorMiddleware);
+router.use(errorMiddleware);
+app.use(router);
 app.listen(port, () => {
   logger.info(`[server]: Server is running at port ${port}`);
 });
