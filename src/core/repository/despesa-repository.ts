@@ -14,4 +14,5 @@ export interface DespesaRepository {
   findById: (id: number) => Promise<DetalheDespesaDto | undefined>;
   existsById: (id: number) => Promise<boolean>;
   save: (despesa: Despesa) => Promise<number | undefined>;
+  update(id: number, dto: any): Promise<void>;
 }

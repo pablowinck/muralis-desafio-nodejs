@@ -6,6 +6,7 @@ import { DatabaseConnection } from "@connections/database-connection";
 import { Pageable } from "@entity/Pageable";
 import { ResponseDespesaDetalhadaDto } from "@dto/response-despesa-detalhada-dto";
 import { Despesa } from "@entity/Despesa";
+import { DespesaFieldMapper } from "@mapper/despesa-field-mapper";
 
 const INSERT_QUERY = `INSERT INTO despesa (idcategoria, idtipopagamento, valor, datacompra, descricao,
                                            bairro, cidade,
@@ -74,6 +75,17 @@ export class DespesaRepositoryImpl implements DespesaRepository {
     }
     logger.info("[repository] Despesa %o buscada com sucesso", id);
     return DetalheDespesaDto.from(response);
+  }
+
+  async update(id: number, dto: any): Promise<void> {
+    const despesa = DespesaFieldMapper.map(dto);
+    const query = `UPDATE despesa
+                       SET ${Object.keys(despesa)
+                         .map((key, index) => `${key} = $${index + 1}`)
+                         .join(", ")}
+                       WHERE id = $${Object.keys(despesa).length + 1}`;
+    const params = Object.values(despesa).concat(id);
+    await this.client.query(query, params);
   }
 
   async save(despesa: Despesa): Promise<number | undefined> {
