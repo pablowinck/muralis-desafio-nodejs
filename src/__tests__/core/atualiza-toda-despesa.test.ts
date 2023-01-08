@@ -24,7 +24,7 @@ const atualizaDespesa = new AtualizaTodaDespesa(
 
 test("Atualiza despesa", async () => {
   const despesa = DespesaFactory.execute();
-  await despesaRepository.save(despesa);
+  const id = await despesaRepository.save(despesa);
   const dto = new UpdateDespesaDto(
     100,
     "08/01/2023",
@@ -40,10 +40,9 @@ test("Atualiza despesa", async () => {
     "vegeta"
   );
   expect(despesa.descricao).not.toEqual(dto.descricao);
-  expect(despesa.id).not.toBeUndefined();
-  const result = await atualizaDespesa.execute(despesa.id || 0, dto);
+  const result = await atualizaDespesa.execute(id, dto);
   expect(result).not.toBeNull();
   expect(result?.success).toBeTruthy();
-  const findedDepesa = await despesaRepository.findById(despesa.id || 0);
+  const findedDepesa = await despesaRepository.findById(id);
   expect(findedDepesa?.descricao).toEqual(dto.descricao);
 });

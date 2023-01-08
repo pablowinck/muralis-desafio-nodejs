@@ -86,13 +86,18 @@ export class DespesaMemoryRepository implements DespesaRepository {
     }
     return id;
   }
+
   async save(despesa: Despesa): Promise<number> {
     if (despesa.descricao === "erro") return 0;
     if (!despesa.id) {
       despesa.id = this.generateId();
       this.despesas.push(despesa);
     }
-    this.despesas[this.despesas.indexOf(despesa)] = despesa;
+    this.despesas.splice(
+      this.despesas.findIndex((d) => d.id === despesa.id),
+      1,
+      despesa
+    );
     return Promise.resolve(despesa.id || 0);
   }
 
