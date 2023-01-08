@@ -2,7 +2,7 @@ import { Categoria } from "../entity/Categoria";
 import { TipoPagamento } from "../entity/TipoPagamento";
 import { ResponseDespesaByMes } from "../responses/response-despesa-by-mes";
 
-export class DespesaDto {
+export class DetalheDespesaDto {
   id: number;
   valor: number;
   data: string;
@@ -15,11 +15,11 @@ export class DespesaDto {
   categoria: Categoria;
   tipoPagamento: TipoPagamento;
 
-  static from(responseDespesaByMes: ResponseDespesaByMes): DespesaDto {
+  static from(responseDespesaByMes: ResponseDespesaByMes): DetalheDespesaDto {
     const id = responseDespesaByMes.iddespesa;
     const valor = responseDespesaByMes.valor;
     const data = responseDespesaByMes.datacompra.toISOString()?.split("T")[0];
-    const descricao = responseDespesaByMes.descricaocategoria;
+    const descricao = responseDespesaByMes.descricaodespesa;
     const bairro = responseDespesaByMes.bairro;
     const cidade = responseDespesaByMes.cidade;
     const estado = responseDespesaByMes.estado;
@@ -34,7 +34,7 @@ export class DespesaDto {
       responseDespesaByMes.idtipopagamento,
       responseDespesaByMes.tipopagamento
     );
-    return new DespesaDto(
+    return new DetalheDespesaDto(
       id,
       valor,
       data,

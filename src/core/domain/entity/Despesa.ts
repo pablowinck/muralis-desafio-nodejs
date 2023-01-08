@@ -1,11 +1,11 @@
 export class Despesa {
   constructor(
-    readonly id: number,
+    readonly id: number | undefined,
     readonly valor: number,
     readonly dataCompra: Date,
     readonly descricao: string,
     readonly idTipoPagamento: number,
-    readonly idCategoria: string,
+    readonly idCategoria: number,
     readonly CEP: string,
     readonly logradouro: string,
     readonly numero: string,

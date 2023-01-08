@@ -6,6 +6,10 @@ import dotenv from "dotenv";
 import { DespesaRepositoryImpl } from "./outbound/database/despesa-repository-impl";
 import { BuscaDespesasMesAtual } from "./core/use-case/busca-despesas-mes-atual";
 import { DespesaController } from "./inbound/controller/despesa-controller";
+import { CategoriaRepositoryImpl } from "./outbound/database/categoria-repository-impl";
+import { TipoPagamentoRepositoryImpl } from "./outbound/database/tipo-pagamento-repository-impl";
+import { ViaCepRepositoryImpl } from "./outbound/rest/via-cep-repository-impl";
+import { CadastraDespesa } from "./core/use-case/cadastra-despesa";
 
 dotenv.config();
 
@@ -20,9 +24,18 @@ app.use(
 
 const client = new PgConnection();
 const despesaRepository = new DespesaRepositoryImpl(client);
+const categoriaRepository = new CategoriaRepositoryImpl(client);
+const tipoPagamentoRepository = new TipoPagamentoRepositoryImpl(client);
+const viacepRepository = new ViaCepRepositoryImpl();
 const buscaDespesasMesAtual = new BuscaDespesasMesAtual(despesaRepository);
+const cadastraDespesa = new CadastraDespesa(
+  despesaRepository,
+  categoriaRepository,
+  tipoPagamentoRepository,
+  viacepRepository
+);
 
-new DespesaController(app, buscaDespesasMesAtual);
+new DespesaController(app, buscaDespesasMesAtual, cadastraDespesa);
 
 app.get("/", (req: Request, res: Response) => {
   res.send(JSON.stringify({ message: "server is up!" }));
