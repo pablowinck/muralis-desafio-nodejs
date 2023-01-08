@@ -1,6 +1,6 @@
 import { Categoria } from "../entity/Categoria";
 import { TipoPagamento } from "../entity/TipoPagamento";
-import { ResponseDespesaByMes } from "../responses/response-despesa-by-mes";
+import { ResponseDespesaDetalhada } from "../responses/response-despesa-detalhada";
 import { ValorMapper } from "../mapper/valor-mapper";
 import { DateMapper } from "../mapper/date-mapper";
 
@@ -17,7 +17,9 @@ export class DetalheDespesaDto {
   categoria: Categoria;
   tipoPagamento: TipoPagamento;
 
-  static from(responseDespesaByMes: ResponseDespesaByMes): DetalheDespesaDto {
+  static from(
+    responseDespesaByMes: ResponseDespesaDetalhada
+  ): DetalheDespesaDto {
     const id = responseDespesaByMes.iddespesa;
     const valor = ValorMapper.format(+responseDespesaByMes.valor);
     const data = DateMapper.format(responseDespesaByMes.datacompra);

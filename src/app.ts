@@ -13,6 +13,7 @@ import { CadastraDespesa } from "./core/use-case/cadastra-despesa";
 import { BuscaDespesasPorPeriodo } from "./core/use-case/busca-despesas-por-periodo";
 import { errorMiddleware } from "./inbound/middleware/error-middleware";
 import "express-async-errors";
+import { BuscaDespesaEspecifica } from "./core/use-case/busca-despesa-especifica";
 
 dotenv.config();
 
@@ -34,6 +35,7 @@ const tipoPagamentoRepository = new TipoPagamentoRepositoryImpl(client);
 const viacepRepository = new ViaCepRepositoryImpl();
 const buscaDespesasMesAtual = new BuscaDespesasMesAtual(despesaRepository);
 const buscaDespesasPorPeriodo = new BuscaDespesasPorPeriodo(despesaRepository);
+const buscaDespesaEspecifica = new BuscaDespesaEspecifica(despesaRepository);
 const cadastraDespesa = new CadastraDespesa(
   despesaRepository,
   categoriaRepository,
@@ -45,6 +47,7 @@ new DespesaController(
   router,
   buscaDespesasMesAtual,
   buscaDespesasPorPeriodo,
+  buscaDespesaEspecifica,
   cadastraDespesa
 );
 

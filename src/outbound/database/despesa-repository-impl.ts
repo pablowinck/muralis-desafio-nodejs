@@ -4,7 +4,7 @@ import { DetalheDespesaDto } from "../../core/domain/dto/detalhe-despesa-dto";
 import logger from "../../core/config/logger";
 import { DatabaseConnection } from "../../core/connections/database-connection";
 import { Pageable } from "../../core/domain/entity/Pageable";
-import { ResponseDespesaByMes } from "../../core/domain/responses/response-despesa-by-mes";
+import { ResponseDespesaDetalhada } from "../../core/domain/responses/response-despesa-detalhada";
 import { Despesa } from "../../core/domain/entity/Despesa";
 
 export class DespesaRepositoryImpl implements DespesaRepository {
@@ -12,6 +12,38 @@ export class DespesaRepositoryImpl implements DespesaRepository {
 
   constructor(client: DatabaseConnection) {
     this.client = client;
+  }
+
+  async findById(id: number): Promise<DetalheDespesaDto | undefined> {
+    logger.info("[repository] Buscando despesa %o", id);
+    const [response] = await this.client.query<[ResponseDespesaDetalhada]>(
+      `SELECT d.id         AS idDespesa,
+                    d.valor      AS valor,
+                    d.dataCompra AS dataCompra,
+                    d.descricao  AS descricaoDespesa,
+                    d.bairro     AS bairro,
+                    d.cidade     AS cidade,
+                    d.estado     AS estado,
+                    d.CEP        AS CEP,
+                    d.logradouro AS logradouro,
+                    t.id         AS idTipoPagamento,
+                    t.tipo       AS tipoPagamento,
+                    c.id         AS idCategoria,
+                    c.nome       AS nomeCategoria,
+                    c.descricao  AS descricaoCategoria
+             FROM despesa d
+                      LEFT JOIN categoria c ON d.idcategoria = c.id
+                      LEFT JOIN tipopagamento t on t.id = d.idtipopagamento
+             WHERE d.id = $1
+             LIMIT 1`,
+      [id]
+    );
+    if (!response) {
+      logger.info("[repository] Despesa nao encontrada");
+      return undefined;
+    }
+    logger.info("[repository] Despesa %o buscada com sucesso", id);
+    return DetalheDespesaDto.from(response);
   }
 
   async save(despesa: Despesa): Promise<number | undefined> {
@@ -48,7 +80,7 @@ export class DespesaRepositoryImpl implements DespesaRepository {
     }
   }
 
-  async findDespesaByDatas(options: {
+  async findByPeriodo(options: {
     size: number;
     dataFim: string;
     page: number;
@@ -60,27 +92,27 @@ export class DespesaRepositoryImpl implements DespesaRepository {
       options.dataFim,
       options
     );
-    const response = await this.client.query<ResponseDespesaByMes[]>(
+    const response = await this.client.query<ResponseDespesaDetalhada[]>(
       `SELECT d.id         AS idDespesa,
-              d.valor      AS valor,
-              d.dataCompra AS dataCompra,
-              d.descricao  AS descricaoDespesa,
-              d.bairro     AS bairro,
-              d.cidade     AS cidade,
-              d.estado     AS estado,
-              d.CEP        AS CEP,
-              d.logradouro AS logradouro,
-              t.id         AS idTipoPagamento,
-              t.tipo       AS tipoPagamento,
-              c.id         AS idCategoria,
-              c.nome       AS nomeCategoria,
-              c.descricao  AS descricaoCategoria
-       FROM despesa d
-                LEFT JOIN categoria c ON d.idcategoria = c.id
-                LEFT JOIN tipopagamento t on t.id = d.idtipopagamento
-       WHERE d.dataCompra BETWEEN $1 AND $2
-       ORDER BY d.dataCompra DESC
-       LIMIT $3 OFFSET $4`,
+                    d.valor      AS valor,
+                    d.dataCompra AS dataCompra,
+                    d.descricao  AS descricaoDespesa,
+                    d.bairro     AS bairro,
+                    d.cidade     AS cidade,
+                    d.estado     AS estado,
+                    d.CEP        AS CEP,
+                    d.logradouro AS logradouro,
+                    t.id         AS idTipoPagamento,
+                    t.tipo       AS tipoPagamento,
+                    c.id         AS idCategoria,
+                    c.nome       AS nomeCategoria,
+                    c.descricao  AS descricaoCategoria
+             FROM despesa d
+                      LEFT JOIN categoria c ON d.idcategoria = c.id
+                      LEFT JOIN tipopagamento t on t.id = d.idtipopagamento
+             WHERE d.dataCompra BETWEEN $1 AND $2
+             ORDER BY d.dataCompra DESC
+             LIMIT $3 OFFSET $4`,
       [
         options.dataInicio,
         options.dataFim,
@@ -117,31 +149,31 @@ export class DespesaRepositoryImpl implements DespesaRepository {
     );
   }
 
-  async findDespesaByMesAtual(
+  async findByMesAtual(
     options: Pageable = new Pageable(0, 10)
   ): Promise<Page<DetalheDespesaDto>> {
     logger.info("[repository] Buscando despesas do mes atual: %o", options);
-    const response = await this.client.query<ResponseDespesaByMes[]>(
+    const response = await this.client.query<ResponseDespesaDetalhada[]>(
       `SELECT d.id         AS idDespesa,
-              d.valor      AS valor,
-              d.dataCompra AS dataCompra,
-              d.descricao  AS descricaoDespesa,
-              d.bairro     AS bairro,
-              d.cidade     AS cidade,
-              d.estado     AS estado,
-              d.CEP        AS CEP,
-              d.logradouro AS logradouro,
-              t.id         AS idTipoPagamento,
-              t.tipo       AS tipoPagamento,
-              c.id         AS idCategoria,
-              c.nome       AS nomeCategoria,
-              c.descricao  AS descricaoCategoria
-       FROM despesa d
-                LEFT JOIN categoria c ON d.idcategoria = c.id
-                LEFT JOIN tipopagamento t on t.id = d.idtipopagamento
-       WHERE EXTRACT(MONTH FROM d.datacompra) = EXTRACT(MONTH FROM CURRENT_DATE)
-       ORDER BY d.dataCompra DESC
-       LIMIT $1 OFFSET $2`,
+                    d.valor      AS valor,
+                    d.dataCompra AS dataCompra,
+                    d.descricao  AS descricaoDespesa,
+                    d.bairro     AS bairro,
+                    d.cidade     AS cidade,
+                    d.estado     AS estado,
+                    d.CEP        AS CEP,
+                    d.logradouro AS logradouro,
+                    t.id         AS idTipoPagamento,
+                    t.tipo       AS tipoPagamento,
+                    c.id         AS idCategoria,
+                    c.nome       AS nomeCategoria,
+                    c.descricao  AS descricaoCategoria
+             FROM despesa d
+                      LEFT JOIN categoria c ON d.idcategoria = c.id
+                      LEFT JOIN tipopagamento t on t.id = d.idtipopagamento
+             WHERE EXTRACT(MONTH FROM d.datacompra) = EXTRACT(MONTH FROM CURRENT_DATE)
+             ORDER BY d.dataCompra DESC
+             LIMIT $1 OFFSET $2`,
       [options.size, options.page * options.size]
     );
     const despesas: DetalheDespesaDto[] = response.map((despesa) =>

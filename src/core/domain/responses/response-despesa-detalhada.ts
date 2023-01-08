@@ -1,4 +1,4 @@
-export interface ResponseDespesaByMes {
+export interface ResponseDespesaDetalhada {
   iddespesa: number;
   valor: number;
   datacompra: Date;

@@ -4,14 +4,13 @@ import { Pageable } from "../domain/entity/Pageable";
 import { Despesa } from "../domain/entity/Despesa";
 
 export interface DespesaRepository {
-  findDespesaByMesAtual: (
-    options?: Pageable
-  ) => Promise<Page<DetalheDespesaDto>>;
-  findDespesaByDatas: (options: {
+  findByMesAtual: (options?: Pageable) => Promise<Page<DetalheDespesaDto>>;
+  findByPeriodo: (options: {
     size: number;
     dataFim: string;
     page: number;
     dataInicio: string;
   }) => Promise<Page<DetalheDespesaDto>>;
+  findById: (id: number) => Promise<DetalheDespesaDto | undefined>;
   save: (despesa: Despesa) => Promise<number | undefined>;
 }

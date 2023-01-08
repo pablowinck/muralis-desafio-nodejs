@@ -6,12 +6,14 @@ import { BuscaDespesasPorPeriodo } from "../../core/use-case/busca-despesas-por-
 import { HttpException } from "../../core/domain/entity/HttpException";
 import { ValidationMiddleware } from "../middleware/validation-middleware";
 import { CadastraDespesaDto } from "../../core/domain/dto/cadastra-despesa-dto";
+import { BuscaDespesaEspecifica } from "../../core/use-case/busca-despesa-especifica";
 
 export class DespesaController {
   constructor(
     readonly router: IRouter,
     readonly buscaDespesasMesAtual: BuscaDespesasMesAtual,
     readonly buscaDespesasPorPeriodo: BuscaDespesasPorPeriodo,
+    readonly buscaDespesaEspecifica: BuscaDespesaEspecifica,
     readonly cadastraDespesa: CadastraDespesa
   ) {
     router.get("/api/despesas", async (req, res) => {
@@ -41,6 +43,11 @@ export class DespesaController {
         new Pageable(page, size)
       );
       res.json(despesas);
+    });
+    router.get("/api/despesas/:id", async (req, res) => {
+      const id = parseInt(req.params.id);
+      const despesa = await buscaDespesaEspecifica.execute(id);
+      res.json(despesa);
     });
     router.post(
       "/api/despesas",

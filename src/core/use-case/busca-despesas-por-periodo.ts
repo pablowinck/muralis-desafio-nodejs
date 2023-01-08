@@ -15,7 +15,7 @@ export class BuscaDespesasPorPeriodo {
     logger.info(
       `[use-case] Buscando despesas entre datas: dataInicial ${options.dataInicio} e dataFinal ${options.dataFim}`
     );
-    const despesas = await this.repository.findDespesaByDatas(options);
+    const despesas = await this.repository.findByPeriodo(options);
     logger.info(
       `[use-case] ${despesas.totalElements} despesas entre ${options.dataInicio} e ${options.dataFim} atual buscadas com sucesso`
     );

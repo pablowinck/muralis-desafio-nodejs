@@ -1,6 +1,7 @@
 export class Despesa {
+  id: number | undefined;
   constructor(
-    readonly id: number | undefined,
+    id: number | undefined,
     readonly valor: number,
     readonly dataCompra: Date,
     readonly descricao: string,
@@ -13,5 +14,7 @@ export class Despesa {
     readonly bairro: string,
     readonly cidade: string,
     readonly estado: string
-  ) {}
+  ) {
+    this.id = id;
+  }
 }

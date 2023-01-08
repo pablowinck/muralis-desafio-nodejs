@@ -2,31 +2,127 @@ import { DespesaRepository } from "../../core/repository/despesa-repository";
 import { Pageable } from "../../core/domain/entity/Pageable";
 import { Page } from "../../core/domain/entity/Page";
 import { DetalheDespesaDto } from "../../core/domain/dto/detalhe-despesa-dto";
-import { Categoria } from "../../core/domain/entity/Categoria";
-import { TipoPagamento } from "../../core/domain/entity/TipoPagamento";
 import { Despesa } from "../../core/domain/entity/Despesa";
+import { ResponseDespesaDetalhada } from "../../core/domain/responses/response-despesa-detalhada";
 
 export class DespesaMemoryRepository implements DespesaRepository {
-  save(_: Despesa): Promise<number> {
-    return Promise.resolve(0);
-  }
-  async findDespesaByMesAtual(
-    _: Pageable | undefined
-  ): Promise<Page<DetalheDespesaDto>> {
-    const despesa = new DetalheDespesaDto(
-      1,
-      100,
-      "2021-01-01",
-      "descricao",
-      "bairro",
-      "cidade",
-      "estado",
-      "CEP",
-      "logradouro",
-      new Categoria(1, "nome", "descricao"),
-      new TipoPagamento(1, "nome")
-    );
+  constructor(readonly despesas: Despesa[] = []) {}
 
-    return Promise.resolve(new Page<DetalheDespesaDto>([despesa], 0, 0, 0, 0));
+  findById(id: number): Promise<DetalheDespesaDto | undefined> {
+    const despesa = this.despesas.find((d) => d.id === id);
+    if (!despesa) return Promise.resolve(undefined);
+    const response: ResponseDespesaDetalhada = {
+      iddespesa: despesa.id || 0,
+      valor: despesa.valor,
+      datacompra: despesa.dataCompra,
+      descricaodespesa: despesa.descricao,
+      bairro: despesa.bairro,
+      cidade: despesa.cidade,
+      estado: despesa.estado,
+      CEP: despesa.CEP,
+      logradouro: despesa.logradouro,
+      idtipopagamento: 123,
+      tipopagamento: "aleatorio",
+      idcategoria: 123,
+      nomecategoria: "aleatorio",
+      descricaocategoria: "aleatorio",
+    };
+    return Promise.resolve(DetalheDespesaDto.from(response));
+  }
+
+  async findByPeriodo(options: {
+    size: number;
+    dataFim: string;
+    page: number;
+    dataInicio: string;
+  }): Promise<Page<DetalheDespesaDto>> {
+    const detalhes = this.despesas
+      .filter(
+        (d) =>
+          d.dataCompra.getDate() >= new Date(options.dataInicio).getDate() &&
+          d.dataCompra.getDate() <= new Date(options.dataFim).getDate()
+      )
+      .map((despesa) => {
+        const response: ResponseDespesaDetalhada = {
+          iddespesa: despesa.id || 0,
+          valor: despesa.valor,
+          datacompra: despesa.dataCompra,
+          descricaodespesa: despesa.descricao,
+          bairro: despesa.bairro,
+          cidade: despesa.cidade,
+          estado: despesa.estado,
+          CEP: despesa.CEP,
+          logradouro: despesa.logradouro,
+          idtipopagamento: 123,
+          tipopagamento: "aleatorio",
+          idcategoria: 123,
+          nomecategoria: "aleatorio",
+          descricaocategoria: "aleatorio",
+        };
+        return DetalheDespesaDto.from(response);
+      });
+
+    return Promise.resolve(
+      new Page<DetalheDespesaDto>(
+        detalhes,
+        options.page,
+        options.size,
+        detalhes.length,
+        +(detalhes.length / options.size).toFixed(0)
+      )
+    );
+  }
+
+  generateId(): number {
+    let id = parseInt((Math.random() * 1000).toFixed(0));
+    while (this.despesas.find((d) => d.id === id)) {
+      id = parseInt((Math.random() * 1000).toFixed(0));
+    }
+    return id;
+  }
+  async save(despesa: Despesa): Promise<number> {
+    despesa.id = this.generateId();
+    this.despesas.push(despesa);
+    return Promise.resolve(despesa.id || 0);
+  }
+
+  async findByMesAtual(
+    options: Pageable | undefined
+  ): Promise<Page<DetalheDespesaDto>> {
+    const detalhes = this.despesas
+      .filter(
+        (d) =>
+          d.dataCompra.getMonth() === new Date().getMonth() &&
+          d.dataCompra.getFullYear() === new Date().getFullYear()
+      )
+      .map((despesa) => {
+        const response: ResponseDespesaDetalhada = {
+          iddespesa: despesa.id || 0,
+          valor: despesa.valor,
+          datacompra: despesa.dataCompra,
+          descricaodespesa: despesa.descricao,
+          bairro: despesa.bairro,
+          cidade: despesa.cidade,
+          estado: despesa.estado,
+          CEP: despesa.CEP,
+          logradouro: despesa.logradouro,
+          idtipopagamento: 123,
+          tipopagamento: "aleatorio",
+          idcategoria: 123,
+          nomecategoria: "aleatorio",
+          descricaocategoria: "aleatorio",
+        };
+        return DetalheDespesaDto.from(response);
+      });
+
+    return Promise.resolve(
+      new Page<DetalheDespesaDto>(
+        detalhes,
+        options?.page || 0,
+        options?.size || 10,
+        detalhes.length,
+        +(detalhes.length / (options?.size || 10)).toFixed(0)
+      )
+    );
   }
 }
