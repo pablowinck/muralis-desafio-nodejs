@@ -4,3 +4,4 @@ yarn-lock.json
 package-lock.json
 .idea
 coverage
+.env

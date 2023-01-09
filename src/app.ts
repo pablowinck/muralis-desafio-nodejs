@@ -19,6 +19,10 @@ import { BuscaTipoPagamentoEspecifico } from "@usecase/busca-tipo-pagamento-espe
 import { AtualizaTodaDespesa } from "@usecase/atualiza-toda-despesa";
 import { AtualizaParcialDespesa } from "@usecase/atualiza-parcial-despesa";
 import { ExcluiDespesa } from "@usecase/exclui-despesa";
+import { RelatorioController } from "@inbound/controller/relatorio-controller";
+import { RelatorioCsv } from "@usecase/relatorio-csv";
+import { UploadFile } from "@outbound/s3/upload-file";
+import { S3 } from "aws-sdk";
 
 dotenv.config();
 
@@ -74,6 +78,15 @@ new DespesaController(
   atualizaParcialDespesa,
   excluiDespesa
 );
+
+const s3 = new S3({
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  region: process.env.AWS_REGION,
+});
+const uploadFile = new UploadFile(s3, "muralis-desafio-nodejs");
+const relatorioCsv = new RelatorioCsv(buscaDespesasMesAtual, uploadFile);
+new RelatorioController(router, relatorioCsv);
 
 app.get("/", (req: Request, res: Response) => {
   res.send(JSON.stringify({ message: "server is up!" }));
