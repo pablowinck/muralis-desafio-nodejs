@@ -15,4 +15,5 @@ export interface DespesaRepository {
   existsById: (id: number) => Promise<boolean>;
   save: (despesa: Despesa) => Promise<number | undefined>;
   update(id: number, dto: any): Promise<void>;
+  deleteById(id: number): void;
 }

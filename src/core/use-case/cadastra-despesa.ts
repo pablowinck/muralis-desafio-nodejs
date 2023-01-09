@@ -1,6 +1,6 @@
 import { DespesaRepository } from "@repository/despesa-repository";
 import { PersistDespesaDto } from "@dto/persist-despesa-dto";
-import { PersistResponseDto } from "@dto/persist-response-dto";
+import { ResponseDto } from "@dto/response-dto";
 import { ViaCepRepository } from "@repository/via-cep-repository";
 import { Despesa } from "@entity/Despesa";
 import logger from "../config/logger";
@@ -17,7 +17,7 @@ export class CadastraDespesa {
     private readonly viaCepRepository: ViaCepRepository
   ) {}
 
-  async execute(dto: PersistDespesaDto): Promise<PersistResponseDto> {
+  async execute(dto: PersistDespesaDto): Promise<ResponseDto> {
     logger.info("[use-case] Cadastrando despesa: %o", dto);
     await this.buscaCategoriaEspecficica.execute(dto.categoriaId);
     await this.buscaTipoPagamentoEspecifico.execute(dto.tipoPagamentoId);
@@ -45,6 +45,6 @@ export class CadastraDespesa {
       throw new HttpException(500, "Erro ao salvar despesa");
     }
     logger.info("[use-case] Despesa cadastrada com sucesso com id %d", result);
-    return new PersistResponseDto(`Despesa ${result} criada`, true);
+    return new ResponseDto(`Despesa ${result} criada`, true);
   }
 }

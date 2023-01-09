@@ -18,6 +18,7 @@ import { BuscaCategoriaEspecifica } from "@usecase/busca-categoria-especifica";
 import { BuscaTipoPagamentoEspecifico } from "@usecase/busca-tipo-pagamento-especifico";
 import { AtualizaTodaDespesa } from "@usecase/atualiza-toda-despesa";
 import { AtualizaParcialDespesa } from "@usecase/atualiza-parcial-despesa";
+import { ExcluiDespesa } from "@usecase/exclui-despesa";
 
 dotenv.config();
 
@@ -62,6 +63,7 @@ const atualizaParcialDespesa = new AtualizaParcialDespesa(
   buscaCategoriaEspecifica,
   buscaTipoPagamentoEspecifico
 );
+const excluiDespesa = new ExcluiDespesa(despesaRepository);
 new DespesaController(
   router,
   buscaDespesasMesAtual,
@@ -69,7 +71,8 @@ new DespesaController(
   buscaDespesaEspecifica,
   cadastraDespesa,
   atualizaTodaDespesa,
-  atualizaParcialDespesa
+  atualizaParcialDespesa,
+  excluiDespesa
 );
 
 app.get("/", (req: Request, res: Response) => {

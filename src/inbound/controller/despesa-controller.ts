@@ -9,6 +9,8 @@ import { BuscaDespesaEspecifica } from "@usecase/busca-despesa-especifica";
 import { AtualizaTodaDespesa } from "@usecase/atualiza-toda-despesa";
 import { UpdateDespesaDto } from "@dto/update-despesa-dto";
 import { AtualizaParcialDespesa } from "@usecase/atualiza-parcial-despesa";
+import { ExcluiDespesa } from "@usecase/exclui-despesa";
+import { ResponseDto } from "@dto/response-dto";
 
 export class DespesaController {
   constructor(
@@ -18,7 +20,8 @@ export class DespesaController {
     readonly buscaDespesaEspecifica: BuscaDespesaEspecifica,
     readonly cadastraDespesa: CadastraDespesa,
     readonly atualizaTodaDespesa: AtualizaTodaDespesa,
-    readonly atualizaParcialDespesa: AtualizaParcialDespesa
+    readonly atualizaParcialDespesa: AtualizaParcialDespesa,
+    readonly excluiDespesa: ExcluiDespesa
   ) {
     router.get("/api/despesas", async (req, res) => {
       await this.buscaDespesas(req, res);
@@ -49,6 +52,11 @@ export class DespesaController {
       const id = parseInt(req.params.id);
       const despesa = await atualizaParcialDespesa.execute(id, req.body);
       res.send(despesa);
+    });
+    router.delete("/api/despesas/:id", async (req, res) => {
+      const id = parseInt(req.params.id);
+      await excluiDespesa.execute(id);
+      res.send(new ResponseDto(`Despesa ${id} excluída`, true));
     });
   }
 

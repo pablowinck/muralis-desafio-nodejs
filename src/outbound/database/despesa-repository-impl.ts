@@ -29,9 +29,12 @@ const UPDATE_QUERY = `UPDATE despesa
 
 export class DespesaRepositoryImpl implements DespesaRepository {
   private readonly client: DatabaseConnection;
-
   constructor(client: DatabaseConnection) {
     this.client = client;
+  }
+
+  async deleteById(id: number): Promise<void> {
+    await this.client.query(`DELETE FROM despesa WHERE id = $1`, [id]);
   }
 
   async existsById(id: number): Promise<boolean> {

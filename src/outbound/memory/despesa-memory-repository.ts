@@ -12,6 +12,11 @@ export class DespesaMemoryRepository implements DespesaRepository {
     this.despesas = [];
   }
 
+  async deleteById(id: number): Promise<void> {
+    this.despesas = this.despesas.filter((d) => d.id !== id);
+    return Promise.resolve();
+  }
+
   async update(id: number, dto: any): Promise<void> {
     this.despesas = this.despesas.map((despesa) => {
       if (despesa.id === id) {
