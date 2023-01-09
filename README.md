@@ -48,6 +48,60 @@ O atributo **success** será **true** caso a **request** seja executada com suce
 ### Modelo de dados:
 ![image](https://user-images.githubusercontent.com/70986781/211171802-5afab156-1ec1-4793-ab8f-92438071805e.png)
 
+### Arquitetura Hexagonal
+A arquitetura hexagonal foi aplicada para separar a lógica de negócio da lógica de infraestrutura, permitindo assim, a troca de tecnologias sem afetar a lógica de negócio.
+```mermaid
+graph TD
+    Inbound --> C{CORE} --> Outbound
+```
+
+Exemplo de listagem de despesa:
+```mermaid
+graph TD
+    GET/api/despesas --> C{BuscaDespesasMesAtual use-case}
+    C -->|DespesaRepository| D[PostgreSQL]
+```
+
+### Deploy da aplicação
+A aplicação foi hospedada na plataforma Fly.io, utilizando o banco de dados PostgreSQL.
+
+### Tecnologias utilizadas
+- **Express** - Framework web rapido e minimalista para Node.js
+- **PostgreSQL** - Banco de dados relacional
+- **AWS S3** - Armazenamento de arquivos
+- **Jest** - Framework de testes
+- **Eslint** - Linter
+- **Prettier** - Formatação de código
+- **ClassValidator** - Validação de dados
+- **Morgan** - Logger
+- **Pino** - Logger
+- **Axios** - Cliente HTTP
+- **PDFKit** - Biblioteca para geração de PDF
+- **Json2CSV** - Biblioteca para geração de CSV
+
+### Como rodar o projeto
+* YARN
+```bash
+# Rode docker-compose para subir o banco de dados
+$ docker-compose up -d
+
+# Instale as dependências
+$ yarn
+
+# Rode a aplicação em dev-mode
+$ yarn dev
+```
+* NPM
+```bash
+# Rode docker-compose para subir o banco de dados
+$ docker-compose up -d
+
+# Instale as dependências
+$ npm install
+
+# Rode a aplicação em dev-mode
+$ npm run dev
+```
 
 ### Erratas
 - O usuário deve informar somente o CEP e o número do estabelecimento. Pois há casos dois casos que aconteceria problemas críticos:
