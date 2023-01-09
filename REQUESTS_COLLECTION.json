@@ -7,227 +7,468 @@
 	},
 	"item": [
 		{
-			"name": "Despesas - Local",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:3000/api/despesas?size=10&page=0",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"api",
-						"despesas"
-					],
-					"query": [
-						{
-							"key": "size",
-							"value": "10"
-						},
-						{
-							"key": "page",
-							"value": "0"
-						},
-						{
-							"key": "dataInicio",
-							"value": "2023-01-07",
-							"disabled": true
-						},
-						{
-							"key": "dataFim",
-							"value": "2023-01-08",
-							"disabled": true
+			"name": "Local",
+			"item": [
+				{
+					"name": "Despesas - Local",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/despesas?size=10&page=0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"despesas"
+							],
+							"query": [
+								{
+									"key": "size",
+									"value": "10"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "dataInicio",
+									"value": "2023-01-07",
+									"disabled": true
+								},
+								{
+									"key": "dataFim",
+									"value": "2023-01-08",
+									"disabled": true
+								}
+							]
 						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Despesa Especifica - Local",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:3000/api/despesas/30",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"api",
-						"despesas",
-						"30"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Despesas - Local",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"descricao\": \"teste persistencia\",\r\n    \"valor\": 25.5,\r\n    \"cep\": \"93346140\",\r\n    \"numero\": \"S/N\",\r\n    \"data\": \"08/01/2023\",\r\n    \"categoriaId\": 2,\r\n    \"tipoPagamentoId\": 3\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "http://localhost:3000/api/despesas",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"api",
-						"despesas"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Despesas - Local",
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"valor\": 26.50,\r\n    \"data\": \"07/01/2023\",\r\n    \"descricao\": \"teste persistencia\",\r\n    \"cep\": \"93346140\",\r\n    \"bairro\": \"Petrópolis\",\r\n    \"cidade\": \"Novo Hamburgo\",\r\n    \"estado\": \"RS\",\r\n    \"numero\": \"12345\",\r\n    \"logradouro\": \"Rua Síria\",\r\n    \"categoriaId\": 2,\r\n    \"tipoPagamentoId\": 1\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "Despesa Especifica - Local",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/despesas/30",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"despesas",
+								"30"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "http://localhost:3000/api/despesas/24",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"api",
-						"despesas",
-						"24"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Despesas - Local",
-			"request": {
-				"method": "PATCH",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"valor\": \"R$ 26,50\",\r\n    \"data\": \"07/01/2023\",\r\n    \"descricao\": \"teste persistencia\",\r\n    \"cep\": \"93346140\",\r\n    \"bairro\": \"Petrópolis\",\r\n    \"cidade\": \"Novo Hamburgo\",\r\n    \"estado\": \"RS\",\r\n    \"numero\": \"1234\",\r\n    \"logradouro\": \"Rua Síria\",\r\n    \"categoriaId\": 3,\r\n    \"tipoPagamentoId\": 1\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:3000/api/despesas/24",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"api",
-						"despesas",
-						"24"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Despesas - Local",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:3000/api/despesas/30",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"api",
-						"despesas",
-						"30"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Relatorio - CSV",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:3000/api/relatorio/csv",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"api",
-						"relatorio",
-						"csv"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Relatorio - PDF",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:3000/api/relatorio/pdf?dataInicio=2023-01-07&dataFim=2023-01-08",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"api",
-						"relatorio",
-						"pdf"
-					],
-					"query": [
-						{
-							"key": "dataInicio",
-							"value": "2023-01-07"
+				{
+					"name": "Despesas - Local",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"descricao\": \"teste persistencia\",\r\n    \"valor\": 25.5,\r\n    \"cep\": \"93346140\",\r\n    \"numero\": \"S/N\",\r\n    \"data\": \"08/01/2023\",\r\n    \"categoriaId\": 2,\r\n    \"tipoPagamentoId\": 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						},
-						{
-							"key": "dataFim",
-							"value": "2023-01-08"
+						"url": {
+							"raw": "http://localhost:3000/api/despesas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"despesas"
+							]
 						}
-					]
+					},
+					"response": []
+				},
+				{
+					"name": "Despesas - Local",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"valor\": 26.50,\r\n    \"data\": \"07/01/2023\",\r\n    \"descricao\": \"teste persistencia\",\r\n    \"cep\": \"93346140\",\r\n    \"bairro\": \"Petrópolis\",\r\n    \"cidade\": \"Novo Hamburgo\",\r\n    \"estado\": \"RS\",\r\n    \"numero\": \"12345\",\r\n    \"logradouro\": \"Rua Síria\",\r\n    \"categoriaId\": 2,\r\n    \"tipoPagamentoId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/despesas/24",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"despesas",
+								"24"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Despesas - Local",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"valor\": \"R$ 26,50\",\r\n    \"data\": \"07/01/2023\",\r\n    \"descricao\": \"teste persistencia\",\r\n    \"cep\": \"93346140\",\r\n    \"bairro\": \"Petrópolis\",\r\n    \"cidade\": \"Novo Hamburgo\",\r\n    \"estado\": \"RS\",\r\n    \"numero\": \"1234\",\r\n    \"logradouro\": \"Rua Síria\",\r\n    \"categoriaId\": 3,\r\n    \"tipoPagamentoId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/despesas/24",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"despesas",
+								"24"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Despesas - Local",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/despesas/30",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"despesas",
+								"30"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Relatorio - CSV - Local",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/relatorio/csv",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"relatorio",
+								"csv"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Relatorio - PDF - Local",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/relatorio/pdf?dataInicio=2023-01-07&dataFim=2023-01-08",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"relatorio",
+								"pdf"
+							],
+							"query": [
+								{
+									"key": "dataInicio",
+									"value": "2023-01-07"
+								},
+								{
+									"key": "dataFim",
+									"value": "2023-01-08"
+								}
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
+		},
+		{
+			"name": "Production",
+			"item": [
+				{
+					"name": "Despesas - Production",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://muralis-desafio-nodejs.fly.dev/api/despesas?size=10&page=0",
+							"protocol": "https",
+							"host": [
+								"muralis-desafio-nodejs",
+								"fly",
+								"dev"
+							],
+							"path": [
+								"api",
+								"despesas"
+							],
+							"query": [
+								{
+									"key": "size",
+									"value": "10"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "dataInicio",
+									"value": "2023-01-07",
+									"disabled": true
+								},
+								{
+									"key": "dataFim",
+									"value": "2023-01-08",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Despesa Especifica - Production",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://muralis-desafio-nodejs.fly.dev/api/despesas/1",
+							"protocol": "https",
+							"host": [
+								"muralis-desafio-nodejs",
+								"fly",
+								"dev"
+							],
+							"path": [
+								"api",
+								"despesas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Despesas - Production",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"descricao\": \"teste persistencia\",\r\n    \"valor\": 25.5,\r\n    \"cep\": \"93346140\",\r\n    \"numero\": \"S/N\",\r\n    \"data\": \"01/01/2023\",\r\n    \"categoriaId\": 2,\r\n    \"tipoPagamentoId\": 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://muralis-desafio-nodejs.fly.dev/api/despesas",
+							"protocol": "https",
+							"host": [
+								"muralis-desafio-nodejs",
+								"fly",
+								"dev"
+							],
+							"path": [
+								"api",
+								"despesas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Despesas - Production",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"valor\": 26.50,\r\n    \"data\": \"07/01/2023\",\r\n    \"descricao\": \"teste persistencia\",\r\n    \"cep\": \"93346140\",\r\n    \"bairro\": \"Petrópolis\",\r\n    \"cidade\": \"Novo Hamburgo\",\r\n    \"estado\": \"RS\",\r\n    \"numero\": \"12345\",\r\n    \"logradouro\": \"Rua Síria\",\r\n    \"categoriaId\": 2,\r\n    \"tipoPagamentoId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://muralis-desafio-nodejs.fly.dev/api/despesas/24",
+							"protocol": "https",
+							"host": [
+								"muralis-desafio-nodejs",
+								"fly",
+								"dev"
+							],
+							"path": [
+								"api",
+								"despesas",
+								"24"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Despesas - Production",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"valor\": \"R$ 26,50\",\r\n    \"data\": \"07/01/2023\",\r\n    \"descricao\": \"teste persistencia\",\r\n    \"cep\": \"93346140\",\r\n    \"bairro\": \"Petrópolis\",\r\n    \"cidade\": \"Novo Hamburgo\",\r\n    \"estado\": \"RS\",\r\n    \"numero\": \"1234\",\r\n    \"logradouro\": \"Rua Síria\",\r\n    \"categoriaId\": 3,\r\n    \"tipoPagamentoId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://muralis-desafio-nodejs.fly.dev/api/despesas/24",
+							"protocol": "https",
+							"host": [
+								"muralis-desafio-nodejs",
+								"fly",
+								"dev"
+							],
+							"path": [
+								"api",
+								"despesas",
+								"24"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Despesas - Production",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://muralis-desafio-nodejs.fly.dev/api/despesas/30",
+							"protocol": "https",
+							"host": [
+								"muralis-desafio-nodejs",
+								"fly",
+								"dev"
+							],
+							"path": [
+								"api",
+								"despesas",
+								"30"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Relatorio - CSV - Production",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://muralis-desafio-nodejs.fly.dev/api/relatorio/csv",
+							"protocol": "https",
+							"host": [
+								"muralis-desafio-nodejs",
+								"fly",
+								"dev"
+							],
+							"path": [
+								"api",
+								"relatorio",
+								"csv"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Relatorio - PDF - Production",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://muralis-desafio-nodejs.fly.dev/api/relatorio/pdf?dataInicio=2023-01-07&dataFim=2023-01-09",
+							"protocol": "https",
+							"host": [
+								"muralis-desafio-nodejs",
+								"fly",
+								"dev"
+							],
+							"path": [
+								"api",
+								"relatorio",
+								"pdf"
+							],
+							"query": [
+								{
+									"key": "dataInicio",
+									"value": "2023-01-07"
+								},
+								{
+									"key": "dataFim",
+									"value": "2023-01-09"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }
