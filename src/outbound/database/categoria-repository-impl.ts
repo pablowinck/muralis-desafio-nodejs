@@ -11,9 +11,18 @@ export class CategoriaRepositoryImpl implements CategoriaRepository {
 
   async findById(id: number): Promise<Categoria> {
     const [categoria] = await this.client.query<[Categoria]>(
-      `SELECT * FROM categoria WHERE id = $1`,
+      `SELECT *
+             FROM categoria
+             WHERE id = $1`,
       [id]
     );
     return categoria;
+  }
+
+  async findAll(): Promise<Categoria[]> {
+    return this.client.query<Categoria[]>(
+      `SELECT *
+                FROM categoria`
+    );
   }
 }

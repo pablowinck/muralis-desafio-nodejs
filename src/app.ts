@@ -24,6 +24,8 @@ import { RelatorioCsv } from "@usecase/relatorio-csv";
 import { UploadFile } from "@outbound/s3/upload-file";
 import { S3 } from "aws-sdk";
 import { RelatorioPdf } from "@usecase/relatorio-pdf";
+import { BuscaTodasCategorias } from "@usecase/busca-todas-categorias";
+import { CategoriaController } from "@inbound/controller/categoria-controller";
 
 dotenv.config();
 
@@ -89,6 +91,9 @@ const uploadFile = new UploadFile(s3, "muralis-desafio-nodejs");
 const relatorioCsv = new RelatorioCsv(buscaDespesasMesAtual, uploadFile);
 const relatorioPdf = new RelatorioPdf(buscaDespesasPorPeriodo, uploadFile);
 new RelatorioController(router, relatorioCsv, relatorioPdf);
+
+const buscaTodasCategorias = new BuscaTodasCategorias(categoriaRepository);
+new CategoriaController(router, buscaTodasCategorias);
 
 app.get("/", (req: Request, res: Response) => {
   res.send(JSON.stringify({ message: "server is up!" }));
