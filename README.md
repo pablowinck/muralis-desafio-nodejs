@@ -2,7 +2,7 @@
 #### obs: Avaliador, favor verificar erratas do desafio no final do README.md.
 ### URL da aplicação
 - https://muralis-desafio-react.vercel.app/
-- Utilizar a collection do Postman para testar a API: https://www.getpostman.com/collections/1b0b0c1b0c1b0c1b0c1b
+- Utilizar a collection do Postman para testar a API: [Collection](https://github.com/pablowinck/muralis-desafio-nodejs/blob/main/REQUESTS_COLLECTION.json)
 
 
 
@@ -104,8 +104,8 @@ $ npm run dev
 ```
 
 ### Erratas
-- O usuário deve informar somente o CEP e o número do estabelecimento. Pois há casos dois casos que aconteceria problemas críticos:
+- O usuário não deve informar somente o CEP e o número do estabelecimento. Pois há casos dois casos que aconteceria problemas críticos:
   - O CEP não retorna o endereço completo, como por exemplo o CEP 95800-000. Nesse caso, o usuário deverá informar o endereço completo.
   - Há casos que não se tem número no estabelecimento, nestes casos deveria poder preencher o campo complemento.
 - Endpoints não batem com demandas, pois além dos verbos, não há os endpoints de geração de PDF e Excel.
-- Modelo de dados não bate com demandas, pois nao ha endereço
+- Modelo de dados não bate com demandas, pois não há endereço
