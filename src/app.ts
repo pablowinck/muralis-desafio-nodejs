@@ -26,6 +26,8 @@ import { S3 } from "aws-sdk";
 import { RelatorioPdf } from "@usecase/relatorio-pdf";
 import { BuscaTodasCategorias } from "@usecase/busca-todas-categorias";
 import { CategoriaController } from "@inbound/controller/categoria-controller";
+import { BuscaTodosTiposPagamento } from "@usecase/busca-todos-tipos-pagamento";
+import { TipoPagamentoController } from "@inbound/controller/tipo-pagamento-controller";
 
 dotenv.config();
 
@@ -94,6 +96,11 @@ new RelatorioController(router, relatorioCsv, relatorioPdf);
 
 const buscaTodasCategorias = new BuscaTodasCategorias(categoriaRepository);
 new CategoriaController(router, buscaTodasCategorias);
+
+const buscaTodosTiposPagamento = new BuscaTodosTiposPagamento(
+  tipoPagamentoRepository
+);
+new TipoPagamentoController(router, buscaTodosTiposPagamento);
 
 app.get("/", (req: Request, res: Response) => {
   res.send(JSON.stringify({ message: "server is up!" }));

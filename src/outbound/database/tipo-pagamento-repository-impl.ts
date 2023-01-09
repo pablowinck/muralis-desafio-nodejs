@@ -18,4 +18,11 @@ export class TipoPagamentoRepositoryImpl implements TipoPagamentoRepository {
     );
     return tipoPagamento;
   }
+
+  async findAll(): Promise<TipoPagamento[]> {
+    return this.client.query<TipoPagamento[]>(
+      `SELECT *
+             FROM tipopagamento`
+    );
+  }
 }
