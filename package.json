@@ -4,7 +4,7 @@
   "description": "Desafio Tecnico da Muralis",
   "main": "dist/app.js",
   "scripts": {
-    "start": "ts-node -r dotenv/config src/app.ts | pino-pretty",
+    "start": "ts-node --transpile-only -r dotenv/config src/app.ts | pino-pretty",
     "dev": "nodemon -r dotenv/config src/app.ts | pino-pretty",
     "test": "jest",
     "build": "jest && npx tsc"
