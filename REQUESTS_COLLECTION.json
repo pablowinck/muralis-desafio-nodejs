@@ -231,6 +231,46 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Categorias - Local",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/categorias",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"categorias"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Tipos Pagamento - Local",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/tipos-pagamento",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"tipos-pagamento"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -442,7 +482,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://muralis-desafio-nodejs.fly.dev/api/relatorio/pdf?dataInicio=2023-01-07&dataFim=2023-01-09",
+							"raw": "https://muralis-desafio-nodejs.fly.dev/api/relatorio/pdf?dataInicio=2023-01-01&dataFim=2023-01-09",
 							"protocol": "https",
 							"host": [
 								"muralis-desafio-nodejs",
@@ -457,12 +497,54 @@
 							"query": [
 								{
 									"key": "dataInicio",
-									"value": "2023-01-07"
+									"value": "2023-01-01"
 								},
 								{
 									"key": "dataFim",
 									"value": "2023-01-09"
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Categorias - Production",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://muralis-desafio-nodejs.fly.dev/api/categorias",
+							"protocol": "https",
+							"host": [
+								"muralis-desafio-nodejs",
+								"fly",
+								"dev"
+							],
+							"path": [
+								"api",
+								"categorias"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Tipos Pagamento - Local Copy",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://muralis-desafio-nodejs.fly.dev/api/tipos-pagamento",
+							"protocol": "https",
+							"host": [
+								"muralis-desafio-nodejs",
+								"fly",
+								"dev"
+							],
+							"path": [
+								"api",
+								"tipos-pagamento"
 							]
 						}
 					},
