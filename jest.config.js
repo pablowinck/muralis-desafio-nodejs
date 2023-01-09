@@ -8,4 +8,5 @@ module.exports = {
   moduleDirectories: ["node_modules", "<rootDir>/"],
   roots: [SRC_PATH],
   moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths),
+  modulePathIgnorePatterns: ["<rootDir>/dist/"],
 };
