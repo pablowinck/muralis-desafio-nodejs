@@ -8,11 +8,9 @@ export class DateMapper {
     if (!date) return new Date();
     if (date.split("/").length === 3) {
       const [dia, mes, ano] = date.split("/");
-      const convertedDate = new Date(`${ano}-${mes}-${dia}`);
-      return this.plusDays(convertedDate, 1);
+      return new Date(`${ano}-${mes}-${dia}`);
     }
-    const convertedDate = new Date(date);
-    return this.plusDays(convertedDate, 1);
+    return new Date(date);
   }
 
   private static plusDays(date: Date, days: number): Date {
