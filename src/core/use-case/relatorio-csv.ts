@@ -15,6 +15,9 @@ export class RelatorioCsv {
     const despesasPage = await this.buscaDespesasMesAtual.execute(
       new Pageable(0, 1000000)
     );
+    if (despesasPage.content.length === 0) {
+      return new ResponseDto("Nenhuma despesa encontrada", false);
+    }
     const despesas = despesasPage.content.map((despesa) =>
       DetalheRelatorioDto.from(despesa)
     );

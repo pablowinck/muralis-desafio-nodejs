@@ -20,6 +20,9 @@ export class RelatorioPdf {
       page: 0,
       size: 1000000,
     });
+    if (despesasPage.content.length === 0) {
+      return new ResponseDto("Nenhuma despesa encontrada", false);
+    }
     const despesas = despesasPage.content.map((despesa) =>
       DetalheRelatorioDto.from(despesa)
     );
