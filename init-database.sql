@@ -49,6 +49,8 @@
 --        ('Outros', 'Outros gastos')
 -- ON CONFLICT DO NOTHING;
 
-DROP TABLE IF EXISTS TipoPagamento;
-DROP TABLE IF EXISTS Categoria;
-DROP TABLE IF EXISTS Despesa;
+drop table if exists despesa cascade;
+
+drop table if exists tipopagamento cascade;
+
+drop table if exists categoria cascade;
