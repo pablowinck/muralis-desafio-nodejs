@@ -6,7 +6,36 @@ import { Despesa } from "@entity/Despesa";
 import { ResponseDespesaDetalhadaDto } from "@dto/response-despesa-detalhada-dto";
 
 export class DespesaMemoryRepository implements DespesaRepository {
-  constructor(readonly despesas: Despesa[] = []) {}
+  despesas: Despesa[] = [];
+
+  constructor() {
+    this.despesas = [];
+  }
+
+  async update(id: number, dto: any): Promise<void> {
+    this.despesas = this.despesas.map((despesa) => {
+      if (despesa.id === id) {
+        return new Despesa(
+          despesa.id,
+          dto.valor,
+          dto.dataCompra,
+          dto.descricao,
+          dto.idTipoPagamento,
+          dto.idCategoria,
+          dto.CEP,
+          dto.logradouro,
+          dto.numero,
+          dto.complemento,
+          dto.bairro,
+          dto.cidade,
+          dto.estado
+        );
+      }
+      return despesa;
+    });
+
+    return Promise.resolve();
+  }
 
   existsById(id: number): Promise<boolean> {
     return Promise.resolve(!!this.despesas.find((d) => d.id === id));
