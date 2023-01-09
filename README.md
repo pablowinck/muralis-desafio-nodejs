@@ -50,7 +50,7 @@ O atributo **success** será **true** caso a **request** seja executada com suce
 
 
 ### Erratas
-- O usuário deve informar somente o CEP e o número do estabelecimento. Pois há casos dois casos que aconteceria problemas críticos:
+- O usuário não deve informar somente o CEP e o número do estabelecimento. Pois há casos dois casos que aconteceria problemas críticos:
   - O CEP não retorna o endereço completo, como por exemplo o CEP 95800-000. Nesse caso, o usuário deverá informar o endereço completo.
   - Há casos que não se tem número no estabelecimento, nestes casos deveria poder preencher o campo complemento.
 - Endpoints não batem com demandas, pois além dos verbos, não há os endpoints de geração de PDF e Excel.
