@@ -2,7 +2,7 @@ import { BuscaDespesasMesAtual } from "@usecase/busca-despesas-mes-atual";
 import { Pageable } from "@entity/Pageable";
 import json2csv from "json2csv";
 import { ResponseDto } from "@dto/response-dto";
-import { DetalheCsvDto } from "@dto/detalhe-csv-dto";
+import { DetalheRelatorioDto } from "@dto/detalhe-relatorio-dto";
 import { UploadFile } from "@outbound/s3/upload-file";
 
 export class RelatorioCsv {
@@ -16,7 +16,7 @@ export class RelatorioCsv {
       new Pageable(0, 1000000)
     );
     const despesas = despesasPage.content.map((despesa) =>
-      DetalheCsvDto.from(despesa)
+      DetalheRelatorioDto.from(despesa)
     );
     const csv = await json2csv
       .parseAsync(despesas, {

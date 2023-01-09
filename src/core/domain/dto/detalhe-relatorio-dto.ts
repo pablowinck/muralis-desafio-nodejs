@@ -1,6 +1,6 @@
 import { DetalheDespesaDto } from "@dto/detalhe-despesa-dto";
 
-export class DetalheCsvDto {
+export class DetalheRelatorioDto {
   constructor(
     readonly data: string,
     readonly descricao: string,
@@ -15,9 +15,9 @@ export class DetalheCsvDto {
     readonly cep: string
   ) {}
 
-  static from(detalheDespesaDto: DetalheDespesaDto): DetalheCsvDto {
-    return new DetalheCsvDto(
-      detalheDespesaDto.data,
+  static from(detalheDespesaDto: DetalheDespesaDto): DetalheRelatorioDto {
+    return new DetalheRelatorioDto(
+      detalheDespesaDto.data || "",
       this.retiraAcentos(detalheDespesaDto.descricao),
       detalheDespesaDto.valor.replace("R$ ", ""),
       this.retiraAcentos(detalheDespesaDto.tipoPagamento.tipo),
@@ -25,15 +25,16 @@ export class DetalheCsvDto {
         `${detalheDespesaDto.categoria.nome} - ${detalheDespesaDto.categoria.descricao}`
       ),
       this.retiraAcentos(detalheDespesaDto.logradouro),
-      detalheDespesaDto.numero,
+      detalheDespesaDto.numero || "",
       this.retiraAcentos(detalheDespesaDto.bairro),
       this.retiraAcentos(detalheDespesaDto.cidade),
       this.retiraAcentos(detalheDespesaDto.estado),
-      detalheDespesaDto.cep
+      detalheDespesaDto.cep || ""
     );
   }
 
   private static retiraAcentos(str: string): string {
+    if (!str) return "";
     return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
   }
 }
