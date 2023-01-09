@@ -63,7 +63,8 @@ graph TD
 ```
 
 ### Deploy da aplicação
-A aplicação foi hospedada na plataforma Fly.io, utilizando o banco de dados PostgreSQL.
+- A aplicação foi hospedada na plataforma Fly.io, utilizando o banco de dados PostgreSQL.
+- Foi utilizado Github Actions para automatizar o deploy da aplicação.
 
 ### Tecnologias utilizadas
 - **Express** - Framework web rapido e minimalista para Node.js
