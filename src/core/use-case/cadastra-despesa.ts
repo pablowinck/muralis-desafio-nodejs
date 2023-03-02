@@ -21,7 +21,7 @@ export class CadastraDespesa {
     logger.info("[use-case] Cadastrando despesa: %o", dto);
     await this.buscaCategoriaEspecficica.execute(dto.categoriaId);
     await this.buscaTipoPagamentoEspecifico.execute(dto.tipoPagamentoId);
-    const viaCep = await this.viaCepRepository.findByCep(dto.cep);
+    // const viaCep = await this.viaCepRepository.findByCep(dto.cep);
     // if (!viaCep || !viaCep?.cep) {
     //   throw new HttpException(400, "CEP não encontrado");
     // }
@@ -33,12 +33,12 @@ export class CadastraDespesa {
       dto.tipoPagamentoId,
       dto.categoriaId,
       dto.cep,
-      viaCep?.logradouro || "Rua Siria",
+      "Rua Siria",
       dto.numero,
-      viaCep?.complemento || "",
-      viaCep?.bairro || "Petropolis",
-      viaCep?.localidade || "Novo Hamburgo",
-      viaCep?.uf || "RS"
+      "",
+      "Petropolis",
+      "Novo Hamburgo",
+      "RS"
     );
     const result = await this.despesaRepository.save(despesa);
     if (!result) {
